@@ -1,0 +1,3018 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Say No to Drugs: Building a Drug-Free Future</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            accent: '#e11d48', // Stark Brutalist Crimson
+                            accentDark: '#9f1239', // Blood Red
+                            charcoal: '#09090b', // Off-Black
+                            starkWhite: '#fafafa' // Stark Off-White
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Courier New', 'Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fafafa;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e11d48;
+        }
+        
+        /* Stark Brutalist Borders & Shadow tokens */
+        .brutal-border {
+            border: 2px solid #09090b;
+        }
+        .dark .brutal-border {
+            border: 2px solid #fafafa;
+        }
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #09090b;
+        }
+        .dark .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #e11d48;
+        }
+        .brutal-shadow-red {
+            box-shadow: 4px 4px 0px 0px #e11d48;
+        }
+        .brutal-btn-hover:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #e11d48;
+        }
+        .dark .brutal-btn-hover:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #fafafa;
+        }
+
+        .fade-in-el {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .active-tab-line {
+            position: relative;
+        }
+        .active-tab-line::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #e11d48;
+        }
+        /* Keep background canvas below text contents but visible */
+        #life-run-canvas {
+            pointer-events: none;
+        }
+
+        /* Brutalist Range Slider */
+        input[type=range].brutal-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range].brutal-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 14px;
+            background: #e11d48;
+            border: 2px solid #09090b;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 2px 2px 0px 0px #09090b;
+        }
+        input[type=range].brutal-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #e4e4e7;
+            border: 1px solid #09090b;
+        }
+        .dark input[type=range].brutal-slider::-webkit-slider-thumb {
+            border-color: #fafafa;
+            box-shadow: 2px 2px 0px 0px #fafafa;
+        }
+        .dark input[type=range].brutal-slider::-webkit-slider-runnable-track {
+            background: #27272a;
+            border-color: #fafafa;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased transition-colors duration-300 relative">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-zinc-50/90 dark:bg-zinc-950/90 border-b-2 border-zinc-900 dark:border-zinc-100 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="#home" class="flex items-center space-x-3">
+                <span class="text-xs font-black tracking-[0.2em] text-zinc-950 dark:text-white flex items-center gap-2">
+                    <span id="header-pulse-dot" class="w-2.5 h-2.5 bg-brand-accent brutal-border animate-ping"></span>
+                    SAY NO TO DRUGS <span class="font-light text-zinc-500">/ DRUG-FREE FUTURE</span>
+                </span>
+            </a>
+
+            <!-- Navigation Anchors representing chronological sections -->
+            <nav class="hidden lg:flex items-center space-x-6">
+                <a href="#home" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">00. Home</a>
+                <a href="#about" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">01. Exposure Matrix</a>
+                <a href="#harmful-effects" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">02. Damage Telemetry</a>
+                <a href="#youth" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">03. Youth Stressors</a>
+                <a href="#prevention" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">04. Defense Strategy</a>
+                <a href="#recovery" class="text-[10px] font-bold tracking-widest text-zinc-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-brand-accent uppercase transition-colors">05. Stabilization</a>
+            </nav>
+
+            <div class="hidden lg:flex items-center space-x-4">
+                <!-- Live Search Box -->
+                <div class="relative">
+                    <input type="text" id="global-search" placeholder="Search database..." class="w-32 focus:w-44 px-2 py-1 text-[10px] bg-zinc-100 dark:bg-zinc-900 rounded border brutal-border focus:outline-none transition-all duration-300 font-mono">
+                    <i class="fa-solid fa-magnifying-glass absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-[10px]"></i>
+                    <div id="search-results-dropdown" class="absolute right-0 mt-2 w-64 bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 rounded shadow-xl hidden z-50 p-2 text-[10px] text-zinc-600 dark:text-zinc-400 max-h-60 overflow-y-auto"></div>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-1.5 text-zinc-400 hover:text-brand-accent transition-colors" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon dark:hidden text-xs"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-xs"></i>
+                </button>
+
+                <a href="#pledge" class="px-3 py-1 bg-brand-accent text-white border-2 border-zinc-900 dark:border-white text-[9px] font-black uppercase tracking-widest hover:bg-zinc-950 dark:hover:bg-white dark:hover:text-zinc-950 transition-all brutal-shadow">
+                    Take Pledge
+                </a>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div class="flex items-center space-x-3 lg:hidden">
+                <button id="theme-toggle-mobile" class="p-1.5 text-zinc-400 hover:text-brand-accent transition-colors">
+                    <i class="fa-solid fa-moon dark:hidden text-xs"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-xs"></i>
+                </button>
+                <button id="mobile-menu-btn" class="p-1.5 text-zinc-900 dark:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Drawer navigation -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-zinc-50 dark:bg-zinc-950 border-b-2 border-zinc-900 dark:border-zinc-100 px-6 py-4 space-y-2">
+        <a href="#home" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">00. Home</a>
+        <a href="#about" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">01. Exposure Matrix</a>
+        <a href="#harmful-effects" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">02. Damage Telemetry</a>
+        <a href="#youth" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">03. Youth Stressors</a>
+        <a href="#prevention" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">04. Defense Strategy</a>
+        <a href="#recovery" class="block text-[10px] font-bold tracking-widest text-zinc-500 uppercase py-1">05. Stabilization</a>
+        <a href="#pledge" class="block text-center py-2 bg-brand-accent text-white text-[10px] font-black uppercase tracking-wider border-2 border-zinc-900 dark:border-white mt-4">Take Pledge</a>
+    </div>
+</header>
+
+<!-- Chronological Interactive Background Canvas -->
+<div class="fixed inset-0 z-0">
+    <canvas id="life-run-canvas" class="w-full h-full opacity-90 dark:opacity-80"></canvas>
+</div>
+
+<!-- Continuous Vignette overlay to ensure text remains readable and contrasts with canvas -->
+<div class="fixed inset-0 bg-gradient-to-r from-zinc-50/50 via-transparent to-zinc-50/50 dark:from-zinc-950/50 dark:via-transparent dark:to-zinc-950/50 pointer-events-none z-10"></div>
+
+<!-- Section 0: Home / Hero -->
+<section id="home" class="relative min-h-screen flex items-center pt-24 pb-16 z-20 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Hero Left Side Content -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center space-x-2 text-brand-accent tracking-[0.25em] font-black text-[9px] uppercase font-mono">
+                    <span class="w-2 h-2 bg-brand-accent brutal-border animate-pulse"></span>
+                    <span>Say No to Drugs: Building a Drug-Free Future v4.0</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-none text-zinc-950 dark:text-white uppercase font-mono">
+                    SAY NO TO DRUGS.<br>
+                    <span class="text-brand-accent">SAY YES TO LIFE</span><br>
+                    AND RUN YOUR STORY.
+                </h1>
+                
+                <p class="text-zinc-500 dark:text-zinc-400 max-w-lg text-[11px] leading-relaxed font-mono">
+                    Your choices dynamically sculpt your immediate environment. Toggle the biological path states below to observe how substance abuse instantly alters the stickman's coordination, turns friends into strangers, and collapses the natural world around him.
+                </p>
+
+                <!-- Core Path Controllers for Background Canvas -->
+                <div class="p-5 border-2 border-zinc-900 dark:border-white bg-white/95 dark:bg-zinc-900/95 max-w-md brutal-shadow relative z-30">
+                    <span class="block text-[8px] font-black text-brand-accent uppercase tracking-widest mb-3 font-mono">// Select Running Pathway Storyline</span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="setLifeState('clean')" id="ctrl-state-clean" class="py-3 px-3 border-2 border-zinc-900 dark:border-white bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 transition-all flex items-center justify-between text-left brutal-shadow">
+                            <span class="text-[9px] font-black uppercase tracking-wider">1. Clean Timeline</span>
+                            <span class="w-2.5 h-2.5 bg-zinc-100 dark:bg-zinc-950 border brutal-border"></span>
+                        </button>
+                        <button onclick="setLifeState('ruin')" id="ctrl-state-ruin" class="py-3 px-3 border-2 border-zinc-200 dark:border-zinc-850 bg-transparent text-zinc-400 hover:border-brand-accent hover:text-brand-accent transition-all flex items-center justify-between text-left">
+                            <span class="text-[9px] font-black uppercase tracking-wider">2. Substance Timeline</span>
+                            <span class="w-2.5 h-2.5 bg-zinc-300 dark:bg-zinc-700"></span>
+                        </button>
+                    </div>
+                    
+                    <!-- Live Dynamic Feedback Comment Area -->
+                    <div id="life-state-commentary" class="mt-4 text-[9px] font-bold text-zinc-900 dark:text-zinc-100 italic transition-colors bg-zinc-100 dark:bg-zinc-950 p-2 border border-dashed border-zinc-900 dark:border-zinc-750">
+                        System Status: Pristine. Grass is growing, birds are singing, and people walk beside you.
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="#pledge" class="px-5 py-3 bg-brand-accent text-white border-2 border-zinc-900 dark:border-white text-[9px] font-black uppercase tracking-widest hover:bg-zinc-950 dark:hover:bg-white dark:hover:text-zinc-950 transition-all brutal-shadow brutal-btn-hover">
+                        Sign Anti-Drug Honor Registry
+                    </a>
+                    <a href="#help" class="px-5 py-3 border-2 border-zinc-900 dark:border-zinc-100 text-zinc-950 dark:text-zinc-100 text-[9px] font-black uppercase tracking-widest hover:bg-zinc-950 hover:text-white transition-all">
+                        Emergency Resource Directory
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Right Side Stats Ticker Panel -->
+            <div class="lg:col-span-5">
+                <div class="border-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900 p-6 brutal-shadow relative z-20">
+                    <div class="flex items-center justify-between border-b-2 border-zinc-900 dark:border-zinc-800 pb-3 mb-4">
+                        <span class="text-[9px] font-black uppercase tracking-widest text-zinc-500 font-mono">Telemetry Data Desk</span>
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 border border-brand-accent text-[8px] font-black uppercase tracking-wider text-brand-accent bg-red-50 dark:bg-red-950/20">
+                            <span class="w-2 h-2 bg-brand-accent animate-ping rounded-none"></span> Critical metrics
+                        </span>
+                    </div>
+
+                    <div class="space-y-4 font-mono">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <span class="block text-[8px] uppercase tracking-wider text-zinc-400">Total Timelines Ruined / Year</span>
+                                <span class="text-2xl font-black tracking-tighter text-brand-accent" id="stat-deaths">350,000+</span>
+                            </div>
+                            <div>
+                                <span class="block text-[8px] uppercase tracking-wider text-zinc-400">Active Addicts Globally</span>
+                                <span class="text-2xl font-black tracking-tighter text-zinc-950 dark:text-white" id="stat-addicts">27.50M</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-brand-accent/5 border border-zinc-900 dark:border-white">
+                            <span class="block text-[8px] font-black text-brand-accent uppercase tracking-widest mb-1">Confidential Counseling Hub</span>
+                            <p class="text-lg font-black tracking-tighter text-zinc-950 dark:text-white flex items-center justify-between">
+                                <span>DIAL 1908 (TOLL FREE)</span>
+                                <a href="tel:1908" class="text-xs text-brand-accent animate-pulse"><i class="fa-solid fa-phone"></i></a>
+                            </p>
+                        </div>
+
+                        <div class="border-t border-zinc-200 dark:border-zinc-800 pt-3">
+                            <div class="flex items-center justify-between text-[9px] text-zinc-400 uppercase tracking-wider">
+                                <span>Active Honor Oaths Filed</span>
+                                <span class="font-black text-brand-accent" id="global-pledge-count">142,854</span>
+                            </div>
+                            <div class="w-full bg-zinc-200 dark:bg-zinc-800 h-1.5 mt-2 border border-zinc-900 dark:border-zinc-700">
+                                <div class="bg-brand-accent h-full w-[72%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Section 1: About / Chemical Classification Database -->
+<section id="about" class="py-20 bg-white/90 dark:bg-zinc-900/95 border-t-2 border-b-2 border-zinc-900 dark:border-zinc-100 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-3xl mb-12">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">01 // The Choice Matrix (Ages 17 - 21)</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Substance Exposure & Classification Matrix</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed max-w-xl font-mono">
+                At this stage in the running timeline, exposure risks rise dramatically. Explore the distinct chemical compound classes and their immediate biological targets.
+            </p>
+        </div>
+
+        <!-- Tab Matrix Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Sidebar selectors -->
+            <div class="lg:col-span-4 flex flex-col space-y-2">
+                <button onclick="switchDrugTab('narcotics')" id="btn-narcotics" class="drug-tab-btn active text-left px-4 py-3.5 border-l-4 border-brand-accent bg-zinc-100 dark:bg-zinc-950 transition-all brutal-border">
+                    <span class="block text-xs font-black text-brand-accent uppercase tracking-wider font-mono">01. Narcotics / Opioids</span>
+                    <span class="block text-[8px] text-zinc-400 mt-0.5 uppercase font-mono">Natural & Synthetic pain blocking agents</span>
+                </button>
+                <button onclick="switchDrugTab('stimulants')" id="btn-stimulants" class="drug-tab-btn text-left px-4 py-3.5 border-l-4 border-zinc-300 hover:border-brand-accent bg-transparent transition-all brutal-border">
+                    <span class="block text-xs font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-mono">02. Stimulants</span>
+                    <span class="block text-[8px] text-zinc-400 mt-0.5 uppercase font-mono">Central Nervous System Accelerators</span>
+                </button>
+                <button onclick="switchDrugTab('depressants')" id="btn-depressants" class="drug-tab-btn text-left px-4 py-3.5 border-l-4 border-zinc-300 hover:border-brand-accent bg-transparent transition-all brutal-border">
+                    <span class="block text-xs font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-mono">03. Depressants</span>
+                    <span class="block text-[8px] text-zinc-400 mt-0.5 uppercase font-mono">Synaptic Decelerators & Sedatives</span>
+                </button>
+                <button onclick="switchDrugTab('hallucinogens')" id="btn-hallucinogens" class="drug-tab-btn text-left px-4 py-3.5 border-l-4 border-zinc-300 hover:border-brand-accent bg-transparent transition-all brutal-border">
+                    <span class="block text-xs font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-mono">04. Hallucinogens</span>
+                    <span class="block text-[8px] text-zinc-400 mt-0.5 uppercase font-mono">Sensory Interpretation Disrupters</span>
+                </button>
+            </div>
+
+            <!-- Dynamic content display card -->
+            <div class="lg:col-span-8 border-2 border-zinc-900 dark:border-zinc-100 p-6 sm:p-8 bg-zinc-50 dark:bg-zinc-950 brutal-shadow-red relative overflow-hidden">
+                <div id="drug-content-container">
+                    <div class="space-y-4">
+                        <div class="inline-flex px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-white bg-brand-accent border border-zinc-900 dark:border-white font-mono">
+                            High Mortality Risk
+                        </div>
+                        <h3 class="text-xl font-black tracking-tight text-zinc-950 dark:text-white uppercase font-mono">Narcotics & Opioids</h3>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[11px] leading-relaxed font-mono">
+                            These elements primarily bind to specific opioid receptors in the brain's pain pathways, inducing massive biological dependency and shutting down autonomous respiration controls.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-dashed border-zinc-300 dark:border-zinc-800">
+                            <div>
+                                <h4 class="text-[9px] font-black uppercase tracking-widest text-brand-accent mb-2 font-mono">// Chemical Substrates</h4>
+                                <ul class="space-y-1.5 text-xs text-zinc-800 dark:text-zinc-300 font-mono">
+                                    <li>- Fentanyl (Synthetics - Lethal in micro-doses)</li>
+                                    <li>- Heroin (Diamorphine)</li>
+                                    <li>- Prescribed Pain Inhibitors</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[9px] font-black uppercase tracking-widest text-brand-accent mb-2 font-mono">// Biological Damage Trace</h4>
+                                <ul class="space-y-1.5 text-xs text-zinc-800 dark:text-zinc-300 font-mono">
+                                    <li>- Rapid Autonomous Respiration Collapse</li>
+                                    <li>- Synaptic Path Sclerosis</li>
+                                    <li>- Total Organ Failure / Lethal Toxicity</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW FEATURE: Dopamine Tolerance Simulator -->
+        <div class="mt-12 border-2 border-zinc-900 dark:border-zinc-100 bg-zinc-50 dark:bg-zinc-950 p-6 brutal-shadow font-mono relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:justify-between border-b border-dashed border-zinc-300 dark:border-zinc-800 pb-4 mb-6">
+                <div>
+                    <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-1">// Neurological Reward Center</span>
+                    <h3 class="text-sm font-black text-zinc-900 dark:text-white uppercase">Dopamine Tolerance Simulator</h3>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <button onclick="triggerDopamineSpike()" id="btn-dose" class="px-4 py-2.5 bg-brand-accent text-white text-[10px] font-black tracking-widest border-2 border-zinc-900 dark:border-white uppercase brutal-btn-hover transition-all w-full md:w-auto shadow-[4px_4px_0px_0px_#09090b] dark:shadow-[4px_4px_0px_0px_#fafafa]">
+                        [ TRIGGER SYNTHETIC DOSE ]
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-3xl">
+                    Observe the <strong>Tolerance Effect</strong>. Initial synthetic exposure forces a massive unnatural dopamine spike. However, the brain compensates by shutting down natural receptors, causing your <em>baseline</em> to drop permanently. Eventually, you need the compound just to feel "normal."
+                </p>
+
+                <div class="relative w-full h-12 bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 flex items-center px-0 brutal-shadow-red mt-6">
+                    <!-- Zero Mark -->
+                    <div class="absolute left-0 bottom-0 top-0 w-px bg-zinc-900 dark:bg-zinc-100 opacity-20"></div>
+
+                    <!-- 100% Baseline Marker -->
+                    <div class="absolute left-[33.33%] bottom-0 top-0 w-0.5 bg-zinc-900 dark:bg-white z-10 border-r border-dashed border-white dark:border-zinc-900" title="Natural 100% Baseline">
+                        <span class="absolute -top-5 -translate-x-1/2 text-[8px] font-black text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-950 px-1">100% (NORMAL)</span>
+                    </div>
+
+                    <!-- 300% Max Marker -->
+                    <div class="absolute right-0 bottom-0 top-0 w-px bg-zinc-900 dark:bg-zinc-100 opacity-20">
+                        <span class="absolute -top-5 -translate-x-full text-[8px] font-black text-brand-accent bg-zinc-50 dark:bg-zinc-950 px-1 pr-0 text-right">300% (LETHAL)</span>
+                    </div>
+
+                    <!-- Dynamic Bar -->
+                    <div id="dopamine-bar" class="h-full bg-emerald-500 transition-all duration-700 ease-in-out relative z-0 flex items-center justify-end pr-2 border-r-2 border-zinc-900 dark:border-white" style="width: 33.33%;">
+                        <span id="dopamine-val" class="text-[10px] font-black text-zinc-950 mix-blend-overlay opacity-80">100%</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-dashed border-zinc-300 dark:border-zinc-800">
+                    <div>
+                        <span class="block text-[8px] uppercase tracking-widest text-zinc-400 mb-1">Doses Taken</span>
+                        <span id="dopa-stat-doses" class="text-xl font-black text-zinc-950 dark:text-white">0</span>
+                    </div>
+                    <div>
+                        <span class="block text-[8px] uppercase tracking-widest text-zinc-400 mb-1">Peak Euphoria</span>
+                        <span id="dopa-stat-peak" class="text-xl font-black text-zinc-950 dark:text-white">100%</span>
+                    </div>
+                    <div>
+                        <span class="block text-[8px] uppercase tracking-widest text-brand-accent mb-1">New Baseline</span>
+                        <span id="dopa-stat-base" class="text-xl font-black text-emerald-500">100%</span>
+                    </div>
+                    <div>
+                        <span class="block text-[8px] uppercase tracking-widest text-zinc-400 mb-1">System Status</span>
+                        <span id="dopa-stat-status" class="text-xs font-black text-emerald-500 uppercase mt-1 block">Healthy Baseline</span>
+                    </div>
+                </div>
+                
+                <div class="text-right">
+                    <button onclick="resetDopamine()" id="btn-dopa-reset" class="hidden text-[9px] font-black text-zinc-400 hover:text-brand-accent uppercase tracking-widest transition-all">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reboot Biological Baseline
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 2: Harmful Effects / Damage Telemetry -->
+<section id="harmful-effects" class="py-20 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-3xl mb-12">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">02 // Biological Intrusion (Ages 22 - 25)</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Systemic Structural Damage Mapping</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed max-w-xl font-mono">
+                Observe the immediate anatomical collapse coordinates. Chemicals do not stay localized; they systematically disassemble all cognitive, social, and structural timelines.
+            </p>
+        </div>
+
+        <!-- Damage Categorization Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+            <!-- Physical Collapse -->
+            <div class="p-5 bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-2">// 01 Physical</span>
+                <h3 class="text-xs font-black uppercase text-zinc-900 dark:text-white mb-2">Visceral Decay</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed">
+                    Sclerosis of hepatic tissue, myocardial infection, cellular necrosis, and loss of somatic balance.
+                </p>
+            </div>
+            <!-- Mental Decay -->
+            <div class="p-5 bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-2">// 02 Cognitive</span>
+                <h3 class="text-xs font-black uppercase text-zinc-900 dark:text-white mb-2">Synaptic Rupture</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed">
+                    Terminal clinical depression loops, paranoid delusion spikes, and permanent neural synapse pruning.
+                </p>
+            </div>
+            <!-- Family Impact -->
+            <div class="p-5 bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-2">// 03 Domestic</span>
+                <h3 class="text-xs font-black uppercase text-zinc-900 dark:text-white mb-2">Relational Fracture</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed">
+                    Systemic betrayal feedback loops, total collapse of relational trust, and isolation within domestic circles.
+                </p>
+            </div>
+            <!-- Social Impact -->
+            <div class="p-5 bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-2">// 04 Relational</span>
+                <h3 class="text-xs font-black uppercase text-zinc-900 dark:text-white mb-2">Social Atrophy</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed">
+                    Loss of constructive professional associations, criminal containment records, and isolation trends.
+                </p>
+            </div>
+            <!-- Career Damage -->
+            <div class="p-5 bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-2">// 05 Timeline</span>
+                <h3 class="text-xs font-black uppercase text-zinc-900 dark:text-white mb-2">Resource Exhaustion</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed">
+                    Professional record termination, massive cumulative debt vectors, and structural career suspension.
+                </p>
+            </div>
+        </div>
+
+        <!-- NEW FEATURE: Synaptic Reflex Response Tester -->
+        <div class="mb-10 border-2 border-zinc-900 dark:border-zinc-100 bg-zinc-50 dark:bg-zinc-950 p-6 brutal-shadow font-mono relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:justify-between border-b border-dashed border-zinc-300 dark:border-zinc-800 pb-4 mb-6">
+                <div>
+                    <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-1">// Neurological Motor Lab</span>
+                    <h3 class="text-sm font-black text-zinc-900 dark:text-white uppercase">Synaptic Reflex Simulator</h3>
+                </div>
+                <!-- Mode Selectors -->
+                <div class="flex gap-2 mt-3 md:mt-0">
+                    <button onclick="setReflexMode('baseline')" id="btn-reflex-baseline" class="px-3 py-1.5 bg-brand-accent text-white text-[9px] font-black tracking-widest border border-brand-accent uppercase transition-all">BASELINE</button>
+                    <button onclick="setReflexMode('depressant')" id="btn-reflex-depressant" class="px-3 py-1.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 text-[9px] font-black tracking-widest border border-transparent hover:border-zinc-500 uppercase transition-all">DEPRESSANT</button>
+                    <button onclick="setReflexMode('stimulant')" id="btn-reflex-stimulant" class="px-3 py-1.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 text-[9px] font-black tracking-widest border border-transparent hover:border-zinc-500 uppercase transition-all">STIMULANT</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <div class="md:col-span-7 flex flex-col justify-center">
+                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 mb-4 leading-relaxed">
+                        Test your central nervous system's response latency. Click the pad immediately when it turns green. Change the biological mode to physically experience simulated chemical impairment, false starts, and synaptic lag.
+                    </p>
+                    <div id="reflex-pad" onmousedown="handleReflexClick()" class="w-full h-48 border-2 border-zinc-900 dark:border-zinc-100 flex items-center justify-center cursor-pointer transition-colors bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 select-none brutal-shadow">
+                        <span id="reflex-pad-text" class="font-black text-xl tracking-widest uppercase text-zinc-900 dark:text-white transition-all">CLICK TO START</span>
+                    </div>
+                </div>
+                <div class="md:col-span-5 flex flex-col justify-center bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 p-6 brutal-shadow-red">
+                     <span class="text-[8px] font-black uppercase tracking-widest text-brand-accent mb-4 block">// TELEMETRY OUTPUT</span>
+                     <div class="space-y-5">
+                         <div>
+                             <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block mb-1">Reaction Latency</span>
+                             <div id="reflex-time-output" class="text-4xl font-black text-zinc-950 dark:text-white tracking-tighter">000<span class="text-sm text-zinc-400 ml-1 tracking-normal">ms</span></div>
+                         </div>
+                         <div class="pt-3 border-t border-dashed border-zinc-300 dark:border-zinc-700">
+                             <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block mb-1">Diagnosis</span>
+                             <div id="reflex-diagnosis" class="text-xs font-black text-zinc-900 dark:text-white mt-1 leading-relaxed">AWAITING INPUT...</div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integrated Analytics Matrix and ChartJS block -->
+        <div class="border-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900 p-5 sm:p-6 brutal-shadow-red relative">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-dashed border-zinc-300 dark:border-zinc-800">
+                <div>
+                    <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest font-mono">// Active Analytical Telemetry</span>
+                    <h3 class="text-sm font-black text-zinc-900 dark:text-white uppercase font-mono">Global Substance Destruction Metrics</h3>
+                </div>
+                <!-- Dynamic switch tabs -->
+                <div class="flex space-x-1 bg-zinc-100 dark:bg-zinc-950 p-1 border border-zinc-950 dark:border-white">
+                    <button id="chart-btn-age" onclick="toggleDataset('age')" class="px-2.5 py-1 text-[10px] font-black bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all font-mono">By Chrono-Target</button>
+                    <button id="chart-btn-substance" onclick="toggleDataset('substance')" class="px-2.5 py-1 text-[10px] font-bold text-zinc-400 hover:text-brand-accent transition-all font-mono">By Compound Category</button>
+                </div>
+            </div>
+
+            <div class="relative w-full h-[260px]">
+                <canvas id="impactChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 3: Youth / The Pressure Vector -->
+<section id="youth" class="py-20 bg-white/90 dark:bg-zinc-900/95 border-t-2 border-b-2 border-zinc-900 dark:border-zinc-100 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-6 space-y-6">
+                <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">03 // The Pressure Vector (Ages 26 - 29)</span>
+                <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white uppercase font-mono">Why Runner Posture Collapses</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed font-mono">
+                    Systemic peer alignment stress, performance anxiety loops, and false escapism tactics often lead to high-friction choice junctions. Recognize these entry vector parameters.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono">
+                    <div class="p-4 border border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900">
+                        <h4 class="text-xs font-black uppercase text-zinc-900 dark:text-white">// Peer Compulsion</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1">Sacrificing biological safety parameters to preserve status inside toxic community systems.</p>
+                    </div>
+                    <div class="p-4 border border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900">
+                        <h4 class="text-xs font-black uppercase text-zinc-900 dark:text-white">// Academic Speed Enhancers</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1">Relying on illegal focus stimulants to manage artificial examination stress.</p>
+                    </div>
+                    <div class="p-4 border border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900">
+                        <h4 class="text-xs font-black uppercase text-zinc-900 dark:text-white">// Pain Suppression</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1">Using chemical dampeners to mask systemic mental fatigue or trauma.</p>
+                    </div>
+                    <div class="p-4 border border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900">
+                        <h4 class="text-xs font-black uppercase text-zinc-900 dark:text-white">// False Normalization</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1">Accepting modern pop-culture tropes that minimize deep organic addiction risks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Decision Scenario box (Upgraded to Social Terminal) -->
+            <div class="lg:col-span-6 border-2 border-zinc-900 dark:border-zinc-100 p-0 bg-zinc-50 dark:bg-zinc-950 brutal-shadow relative overflow-hidden flex flex-col h-full min-h-[400px]">
+                <!-- Terminal Header -->
+                <div class="flex items-center justify-between border-b-2 border-zinc-900 dark:border-zinc-100 p-4 bg-zinc-200 dark:bg-zinc-900 font-mono">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 border border-zinc-900 dark:border-zinc-100 bg-brand-accent rounded-full"></div>
+                        <div class="w-3 h-3 border border-zinc-900 dark:border-zinc-100 bg-amber-500 rounded-full"></div>
+                        <div class="w-3 h-3 border border-zinc-900 dark:border-zinc-100 bg-emerald-500 rounded-full"></div>
+                    </div>
+                    <span class="text-[9px] font-black uppercase text-zinc-950 dark:text-white tracking-widest">Social.Resistance.Terminal.exe</span>
+                </div>
+
+                <!-- Live Stress Bar -->
+                <div class="px-5 pt-4 pb-2 font-mono">
+                    <div class="flex justify-between text-[9px] font-black uppercase tracking-widest text-zinc-500 mb-1">
+                        <span>Biological Stress Load</span>
+                        <span id="term-stress-val" class="text-emerald-500">0%</span>
+                    </div>
+                    <div class="w-full h-2 border border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-950">
+                        <div id="term-stress-bar" class="h-full w-[0%] bg-emerald-500 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- Terminal Display -->
+                <div class="flex-1 p-5 font-mono flex flex-col justify-between">
+                    <div>
+                        <span class="block text-[8px] uppercase tracking-widest text-brand-accent mb-3" id="term-stage-label">// STAGE 01 : TERMINAL READY</span>
+                        <p id="term-prompt" class="text-xs text-zinc-950 dark:text-white leading-relaxed min-h-[60px]">
+                            <span id="term-text">Initialize terminal to begin stress simulation...</span><span class="animate-pulse font-black text-brand-accent">_</span>
+                        </p>
+                    </div>
+
+                    <div id="term-options" class="space-y-2 mt-4">
+                        <button onclick="startTerminalSimulation()" class="w-full py-3 text-center text-[10px] font-black uppercase bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-2 border-transparent hover:border-brand-accent hover:text-brand-accent dark:hover:text-brand-accent transition-all">
+                            Start Simulation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 4: Prevention / The Guardrails -->
+<section id="prevention" class="py-20 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-3xl mb-12">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">04 // Defense Strategy (Ages 30 - 35)</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Preventative Frameworks & Healthy Alternatives</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed max-w-xl font-mono">
+                Proactive tactical guardrails protect organic timeline paths. Select your stakeholder view below to access defensive checklists.
+            </p>
+        </div>
+
+        <!-- Stakeholder Segment Buttons -->
+        <div class="flex space-x-1 border-b border-zinc-900 dark:border-zinc-100 mb-8 overflow-x-auto whitespace-nowrap">
+            <button onclick="switchPreventionTab('students')" id="prev-btn-students" class="prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-brand-accent active-tab-line transition-all pr-4 font-mono">For Individuals</button>
+            <button onclick="switchPreventionTab('parents')" id="prev-btn-parents" class="prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all px-4 font-mono">For Guardians</button>
+            <button onclick="switchPreventionTab('schools')" id="prev-btn-schools" class="prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all px-4 font-mono">For Educators</button>
+        </div>
+
+        <!-- Dynamically Swapped Cards -->
+        <div id="prevention-cards-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Populated via Javascript -->
+        </div>
+
+        <!-- Integrated Endorphin Alternative Generator -->
+        <div class="mt-12 border-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900 p-6 max-w-3xl mx-auto brutal-shadow">
+            <div class="text-center">
+                <span class="text-[8px] uppercase tracking-widest font-black text-brand-accent block mb-1 font-mono">// Safe Synaptic Stimulus Matrix</span>
+                <h3 class="text-base font-black tracking-tight text-zinc-950 dark:text-white uppercase mb-2 font-mono">Construct Clean Neurotransmitters</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] max-w-lg mx-auto leading-relaxed mb-4 font-mono">
+                    Pristine physiological actions generate robust endorphin pathways without structural cellular damage or toxic depletion.
+                </p>
+                <button onclick="generateAlternative()" class="px-4 py-2.5 bg-brand-accent text-white border-2 border-zinc-900 dark:border-white text-[10px] font-black uppercase tracking-wider hover:bg-zinc-950 transition-all inline-flex items-center gap-2">
+                    <i class="fa-solid fa-crosshairs text-white"></i>
+                    <span>Generate Natural Endorphin Activity</span>
+                </button>
+            </div>
+            
+            <div id="hobby-container" class="mt-4 p-4 bg-zinc-50 dark:bg-zinc-950 border border-dashed border-zinc-900 dark:border-zinc-100 max-w-md mx-auto hidden transition-all text-center">
+                <h4 class="font-black text-[10px] text-brand-accent uppercase tracking-wide font-mono" id="hobby-title">High-Resistance Athletic Conditioning</h4>
+                <p class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed font-mono" id="hobby-desc">Engages systemic oxygenation, releasing reliable baseline endorphins.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 5: Initiatives / Legislative Defense -->
+<section id="initiatives" class="py-20 bg-white/90 dark:bg-zinc-900/95 border-t-2 border-b-2 border-zinc-900 dark:border-zinc-100 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Banner Shield -->
+            <div class="lg:col-span-5 p-6 border-2 border-zinc-900 dark:border-zinc-100 bg-zinc-50 dark:bg-zinc-950 text-center brutal-shadow-red font-mono">
+                <div class="w-12 h-12 bg-zinc-900 dark:bg-zinc-800 border-2 border-brand-accent flex items-center justify-center text-brand-accent text-xl mx-auto mb-3">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xs font-black uppercase text-zinc-950 dark:text-white mb-1">Nasha Mukt Bharat Abhiyaan</h3>
+                <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-widest block mb-3">// National Action Framework</span>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10px] leading-relaxed max-w-xs mx-auto">
+                    A structural, institutional intervention platform configured by the Ministry of Social Justice and Empowerment to secure risk vectors, establish counselor contact networks, and secure educational campuses.
+                </p>
+            </div>
+
+            <!-- Right Legislative Text -->
+            <div class="lg:col-span-7 space-y-4">
+                <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">05 // Sovereign Protection (Ages 36 - 40)</span>
+                <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white uppercase font-mono">Sovereign Enforcement Mechanisms</h2>
+                
+                <div class="space-y-3 font-mono">
+                    <div class="p-4 border-l-4 border-brand-accent bg-zinc-50 dark:bg-zinc-950/20">
+                        <h4 class="font-black text-[10px] uppercase text-zinc-900 dark:text-white">01 // Academic Territory Enforcement</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1 leading-relaxed">
+                            Securing clean, risk-free educational facility perimeters by imposing strict criminal sentences on illicit distribution nodes within buffer areas.
+                        </p>
+                    </div>
+                    <div class="p-4 border-l-4 border-brand-accent bg-zinc-50 dark:bg-zinc-950/20">
+                        <h4 class="font-black text-[10px] uppercase text-zinc-900 dark:text-white">02 // Safe Rehabilitation Desks</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1 leading-relaxed">
+                            Creating anonymous clinical pathways that prioritize medical restoration over punitive containment records.
+                        </p>
+                    </div>
+                    <div class="p-4 border-l-4 border-brand-accent bg-zinc-50 dark:bg-zinc-950/20">
+                        <h4 class="font-black text-[10px] uppercase text-zinc-900 dark:text-white">03 // Broad Public Intervention Desks</h4>
+                        <p class="text-zinc-500 dark:text-zinc-400 text-[10px] mt-1 leading-relaxed">
+                            Standardizing institutional counseling directories, ensuring free psychiatric evaluations for struggling individuals nationwide.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 6: Recovery / Stabilization -->
+<section id="recovery" class="py-20 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-2xl mb-12 text-center mx-auto">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">06 // Stabilization (Ages 41 - 45)</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Realignment of the Running Timeline</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed font-mono">
+                Physical synapses are capable of restoration. Observe verified records of individuals who chose to re-orient their running trajectory.
+            </p>
+        </div>
+
+        <!-- NEW FEATURE: Neuroplasticity Recovery Laboratory -->
+        <div class="mb-12 border-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-zinc-900 p-6 brutal-shadow-red font-mono relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:justify-between border-b border-dashed border-zinc-300 dark:border-zinc-800 pb-4 mb-6">
+                <div>
+                    <span class="text-[8px] font-black text-brand-accent uppercase tracking-widest block mb-1">// Clinical Telemetry Module</span>
+                    <h3 class="text-sm font-black text-zinc-900 dark:text-white uppercase">Neuroplasticity Recovery Simulation</h3>
+                </div>
+                <div class="mt-2 md:mt-0 text-right">
+                    <span class="block text-[8px] text-zinc-400 uppercase">Sustained Clean Run Duration</span>
+                    <span id="healing-time-display" class="text-xl font-black text-brand-accent">0 Months</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- SVG Neural Map representing the brain recovering -->
+                <div class="relative bg-zinc-50 dark:bg-zinc-950 p-4 border-2 border-zinc-900 dark:border-zinc-800 flex items-center justify-center min-h-[260px]">
+                    <span class="absolute top-2 left-2 text-[8px] font-bold text-zinc-400 uppercase">// Synaptic Matrix Scan</span>
+                    <svg id="neuro-healing-svg" viewBox="0 0 200 200" class="w-full max-w-[220px] h-auto">
+                        <g id="neuro-links" stroke-width="2" stroke="rgba(225, 29, 72, 0.3)"></g>
+                        <g id="neuro-nodes"></g>
+                    </svg>
+                </div>
+
+                <!-- Interactive Slider and Dynamic Recovery Stats -->
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+                            Drag the timeline slider to observe how abstaining from toxic compounds naturally triggers neuroplasticity—rebuilding neural density and restoring baseline dopamine production over 5 years.
+                        </p>
+                        <input type="range" id="healing-slider" min="0" max="60" value="0" class="brutal-slider w-full" oninput="updateNeuroHealing()">
+                        <div class="flex justify-between mt-2 text-[8px] font-bold text-zinc-400 uppercase">
+                            <span>Clinical Detox (0)</span>
+                            <span>Full Stabilization (5 Yrs)</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2 border-t border-dashed border-zinc-200 dark:border-zinc-800">
+                        <div>
+                            <div class="flex justify-between text-[9px] mb-1">
+                                <span class="text-zinc-900 dark:text-white uppercase font-bold">Natural Dopamine Receptors</span>
+                                <span id="heal-stat-dopamine" class="font-black text-brand-accent">15% (Critical Low)</span>
+                            </div>
+                            <div class="w-full bg-zinc-200 dark:bg-zinc-800 h-1 border border-zinc-900 dark:border-zinc-700">
+                                <div id="heal-bar-dopamine" class="bg-brand-accent h-full w-[15%] transition-all"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[9px] mb-1">
+                                <span class="text-zinc-900 dark:text-white uppercase font-bold">Synaptic Grey Matter Density</span>
+                                <span id="heal-stat-grey" class="font-black text-brand-accent">32% (Atrophied)</span>
+                            </div>
+                            <div class="w-full bg-zinc-200 dark:bg-zinc-800 h-1 border border-zinc-900 dark:border-zinc-700">
+                                <div id="heal-bar-grey" class="bg-brand-accent h-full w-[32%] transition-all"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[9px] mb-1">
+                                <span class="text-zinc-900 dark:text-white uppercase font-bold">Cognitive Reaction Baseline</span>
+                                <span id="heal-stat-cog" class="font-black text-brand-accent">Impaired</span>
+                            </div>
+                            <div class="w-full bg-zinc-200 dark:bg-zinc-800 h-1 border border-zinc-900 dark:border-zinc-700">
+                                <div id="heal-bar-cog" class="bg-brand-accent h-full w-[20%] transition-all"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <!-- Story Unit 1 -->
+            <div class="p-6 bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-brand-accent flex items-center justify-center font-bold text-[10px]">
+                        01
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black text-zinc-950 dark:text-white">Devendra S., 24</h4>
+                        <span class="text-[8px] uppercase tracking-wider font-black text-brand-accent">Sustained Clean Run: 24 Months</span>
+                    </div>
+                </div>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10.5px] italic leading-relaxed">
+                    "I relied on synthetic stimulants during high-stress academic stretches. My life path quickly deteriorated into cardiovascular instability and cognitive panic. Accessing free, anonymous counselors stabilized my career. Focus feels incredible when it is organic."
+                </p>
+            </div>
+
+            <!-- Story Unit 2 -->
+            <div class="p-6 bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-brand-accent flex items-center justify-center font-bold text-[10px]">
+                        02
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black text-zinc-950 dark:text-white">Meera K., 21</h4>
+                        <span class="text-[8px] uppercase tracking-wider font-black text-brand-accent">Sustained Clean Run: 18 Months</span>
+                    </div>
+                </div>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[10.5px] italic leading-relaxed">
+                    "Chemical peer validation fractured my relational trust metrics and academic paths. Reaching out for professional medical detoxification was challenging, but realigning my somatic health is the single best decision I have made."
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 7: Pledge / Digital Certificate Portal -->
+<section id="pledge" class="py-20 bg-white/90 dark:bg-zinc-900/95 border-t-2 border-b-2 border-zinc-900 dark:border-zinc-100 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-3xl mb-12">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">07 // Secure Honor Registry</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Anti-Chemical Digital Pledge Registry</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed max-w-xl font-mono">
+                Secure your biological timeline variables on-record. Input parameters below to render your verified **Digital Certificate of Pledge Commitment**.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Form Block -->
+            <div class="lg:col-span-5 p-6 bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow">
+                <form id="pledge-form" onsubmit="generateCertificate(event)" class="space-y-4">
+                    <div>
+                        <label for="pledger-name" class="block text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-1.5 font-mono">Full Legal Name</label>
+                        <input type="text" id="pledger-name" required placeholder="TYPE FULL NAME..." class="w-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-800 focus:outline-none focus:border-brand-accent font-mono">
+                    </div>
+
+                    <div>
+                        <label for="pledger-institution" class="block text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-1.5 font-mono">Affiliated University / Org</label>
+                        <input type="text" id="pledger-institution" required placeholder="ORGANIZATION OR SCHOOL..." class="w-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-800 focus:outline-none focus:border-brand-accent font-mono">
+                    </div>
+
+                    <div class="space-y-2 pt-2 border-t border-dashed border-zinc-300 dark:border-zinc-800 font-mono">
+                        <span class="block text-[8px] font-black uppercase tracking-widest text-brand-accent">// Obligation Terms</span>
+                        
+                        <label class="flex items-start space-x-2.5 text-[10px] cursor-pointer select-none text-zinc-500 dark:text-zinc-400">
+                            <input type="checkbox" required class="mt-0.5 w-3 h-3 accent-brand-accent border-2 border-zinc-900">
+                            <span>I commit to preserving clean neural pathways and rejecting illicit chemical substances.</span>
+                        </label>
+                        <label class="flex items-start space-x-2.5 text-[10px] cursor-pointer select-none text-zinc-500 dark:text-zinc-400">
+                            <input type="checkbox" required class="mt-0.5 w-3 h-3 accent-brand-accent border-2 border-zinc-900">
+                            <span>I will guide struggling peers toward verified medical counseling platforms.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest border-2 border-zinc-900 dark:border-white hover:bg-zinc-950 transition-all font-mono">
+                        Compile Oath Certificate
+                    </button>
+                </form>
+            </div>
+
+            <!-- Display output Canvas -->
+            <div class="lg:col-span-7 flex flex-col justify-center items-center p-6 bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow-red">
+                <div id="cert-placeholder" class="text-center py-12 space-y-3 font-mono">
+                    <i class="fa-solid fa-medal text-3xl text-zinc-300 dark:text-zinc-850 animate-bounce"></i>
+                    <h4 class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Verification Pending</h4>
+                    <p class="text-[10px] text-zinc-400 max-w-xs leading-relaxed">
+                        Input details in the registration panel to generate your certified, high-definition timeline token.
+                    </p>
+                </div>
+
+                <!-- Display node -->
+                <div id="cert-display" class="hidden w-full space-y-4">
+                    <div class="border-2 border-zinc-900 dark:border-zinc-800 p-2 bg-white">
+                        <canvas id="certCanvas" class="w-full h-auto border border-zinc-100"></canvas>
+                    </div>
+                    <div class="flex gap-2 font-mono">
+                        <button onclick="downloadCertificate()" class="flex-1 py-3 bg-zinc-950 text-white text-[10px] font-black uppercase tracking-wider border border-zinc-900 hover:bg-brand-accent transition-all flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Save Image (PNG)</span>
+                        </button>
+                        <button onclick="printCertificate()" class="px-4 py-3 border border-zinc-300 hover:border-zinc-950 text-zinc-750 dark:text-zinc-200 text-xs transition-all">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 8: Support / Helplines -->
+<section id="help" class="py-20 z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        
+        <div class="max-w-2xl mb-12 text-center mx-auto">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-brand-accent font-mono">08 // Crisis Control Matrix</span>
+            <h2 class="text-3xl font-black tracking-tight text-zinc-950 dark:text-white mt-1 uppercase font-mono">Emergency Hotline Matrix</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-xs leading-relaxed font-mono">
+                Connect safely with fully anonymous psychiatric centers or request direct assistance channels.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Hotline Column -->
+            <div class="p-6 bg-white dark:bg-zinc-900/90 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-zinc-950 dark:text-white pb-2 mb-4 border-b border-dashed border-zinc-300 dark:border-zinc-800">// Call Desks</h3>
+                
+                <div class="space-y-3">
+                    <a href="tel:1908" class="block p-3.5 bg-zinc-50 dark:bg-zinc-950 border border-zinc-900 dark:border-zinc-800 hover:border-brand-accent transition-all">
+                        <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400">National Anti-Drug Desk</span>
+                        <span class="text-2xl font-black tracking-tighter text-brand-accent">1908</span>
+                        <span class="block text-[8px] text-zinc-500 font-bold mt-1 uppercase">Free, 24/7 & Completely Confidential</span>
+                    </a>
+                    
+                    <a href="tel:112" class="block p-3.5 bg-zinc-50 dark:bg-zinc-950 border border-zinc-900 dark:border-zinc-800 hover:border-brand-accent transition-all">
+                        <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400">National Emergency Dispatch</span>
+                        <span class="text-xl font-black tracking-tighter text-zinc-950 dark:text-white">112</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Inquire Form Column -->
+            <div class="p-6 bg-white dark:bg-zinc-900/90 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-zinc-950 dark:text-white pb-2 mb-4 border-b border-dashed border-zinc-300 dark:border-zinc-800">// Anonymous Inquiry Intake</h3>
+                
+                <form onsubmit="handleInquirySubmit(event)" class="space-y-3">
+                    <input type="text" id="inquiry-name" placeholder="Name ('Anonymous' permitted)..." class="w-full px-3 py-2 text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-900 dark:border-zinc-800 focus:outline-none focus:border-brand-accent font-mono">
+                    <input type="email" id="inquiry-email" required placeholder="Confidential Email..." class="w-full px-3 py-2 text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-900 dark:border-zinc-800 focus:outline-none focus:border-brand-accent font-mono">
+                    <textarea id="inquiry-msg" required placeholder="Safely describe mental or physical challenges..." rows="3" class="w-full px-3 py-2 text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-900 dark:border-zinc-800 focus:outline-none focus:border-brand-accent font-mono"></textarea>
+                    <button type="submit" class="w-full py-2 bg-brand-accent text-white border border-zinc-900 dark:border-white text-[9px] font-black uppercase tracking-widest">Submit Secure Ticket</button>
+                </form>
+            </div>
+
+            <!-- Document Download Column -->
+            <div class="p-6 bg-white dark:bg-zinc-900/90 border-2 border-zinc-900 dark:border-zinc-100 brutal-shadow font-mono">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-zinc-950 dark:text-white pb-2 mb-4 border-b border-dashed border-zinc-300 dark:border-zinc-800">// Download Materials</h3>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between p-3 border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+                        <div>
+                            <span class="block text-xs font-bold text-zinc-900 dark:text-white uppercase">Youth Security Dossier</span>
+                            <span class="text-[8px] text-zinc-400">PDF • 4.2 MB</span>
+                        </div>
+                        <button onclick="downloadResource('Youth_Security_Manual.pdf')" class="w-7 h-7 border border-zinc-900 dark:border-white bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:bg-brand-accent flex items-center justify-center transition-all text-xs">
+                            <i class="fa-solid fa-arrow-down-long"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+                        <div>
+                            <span class="block text-xs font-bold text-zinc-900 dark:text-white uppercase">Guardian Awareness Dossier</span>
+                            <span class="text-[8px] text-zinc-400">PDF • 2.1 MB</span>
+                        </div>
+                        <button onclick="downloadResource('Guardian_Awareness_Guide.pdf')" class="w-7 h-7 border border-zinc-900 dark:border-white bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:bg-brand-accent flex items-center justify-center transition-all text-xs">
+                            <i class="fa-solid fa-arrow-down-long"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ System -->
+        <div class="max-w-2xl mx-auto space-y-3 pt-4 font-mono">
+            <h3 class="text-[10px] font-black tracking-widest uppercase text-zinc-400 text-center">// Frequently Answered Questions</h3>
+
+            <div class="border-b-2 border-zinc-900 dark:border-zinc-800 pb-2">
+                <button onclick="toggleFaq(1)" class="w-full py-2.5 text-left font-black text-zinc-950 dark:text-white flex items-center justify-between hover:text-brand-accent transition-colors">
+                    <span class="text-xs uppercase">How do I assist a friend refusing counseling?</span>
+                    <i id="faq-icon-1" class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+                </button>
+                <div id="faq-ans-1" class="hidden pb-2 text-[10.5px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Avoid critical friction. Share fully anonymous contact indices or emergency service paths. If their physical safety indicators drop rapidly, instantly inform registered family members or qualified medical experts.
+                </div>
+            </div>
+
+            <div class="border-b-2 border-zinc-900 dark:border-zinc-800 pb-2">
+                <button onclick="toggleFaq(2)" class="w-full py-2.5 text-left font-black text-zinc-950 dark:text-white flex items-center justify-between hover:text-brand-accent transition-colors">
+                    <span class="text-xs uppercase">How are digital oath parameters protected?</span>
+                    <i id="faq-icon-2" class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+                </button>
+                <div id="faq-ans-2" class="hidden pb-2 text-[10.5px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Completely. Digital oath rendering is executed entirely inside your browser's local sandbox model. No personal name parameters or registration details are saved, logged, or transmitted across servers.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Modal Popup Box -->
+<div id="alert-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm hidden">
+    <div class="bg-white dark:bg-zinc-900 rounded-none max-w-sm w-full p-6 text-center border-2 border-zinc-900 dark:border-white shadow-2xl font-mono">
+        <div id="modal-icon-container" class="w-10 h-10 bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-900 dark:border-white flex items-center justify-center text-zinc-950 dark:text-white text-md mx-auto mb-3">
+            <i class="fa-solid fa-circle-check text-brand-accent"></i>
+        </div>
+        <h4 id="modal-title" class="font-black text-zinc-950 dark:text-white text-xs uppercase tracking-wider">Submitted</h4>
+        <p id="modal-desc" class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-2 mb-5 leading-relaxed">System parameters compiled successfully.</p>
+        <button onclick="closeModal()" class="w-full py-3 bg-brand-accent text-white border border-zinc-900 dark:border-white text-[9px] font-black uppercase tracking-widest hover:bg-zinc-950 transition-all">Close Terminal</button>
+    </div>
+</div>
+
+<!-- Footer area -->
+<footer class="bg-zinc-100 dark:bg-zinc-950 border-t-2 border-zinc-900 dark:border-zinc-100 py-12 text-zinc-500 text-[10px] font-mono z-20 relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <span class="text-xs font-black tracking-widest text-zinc-950 dark:text-white block uppercase">// CHOOSE LIFE</span>
+                <p class="leading-relaxed text-zinc-400">
+                    Say No to Drugs: Building a Drug-Free Future is a clean-cut, high-contrast, structural simulation platform designed to defend human running timelines, optimize metabolic parameters, and avoid synthetic chemical dependency.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-black text-zinc-900 dark:text-white uppercase tracking-wider mb-3 text-xs">// Compound Database</h4>
+                <ul class="space-y-1.5">
+                    <li><a href="#about" class="hover:text-brand-accent">Opioids & Synthetics</a></li>
+                    <li><a href="#about" class="hover:text-brand-accent">CNS Stimulants</a></li>
+                    <li><a href="#about" class="hover:text-brand-accent">Sedatives Database</a></li>
+                    <li><a href="#prevention" class="hover:text-brand-accent">Natural Endorphin Activities</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-black text-zinc-900 dark:text-white uppercase tracking-wider mb-3 text-xs">// Support Core</h4>
+                <ul class="space-y-1.5">
+                    <li><a href="#help" class="hover:text-brand-accent">Emergency Helplines</a></li>
+                    <li><a href="#pledge" class="hover:text-brand-accent">Digital Honor Registry</a></li>
+                    <li><a href="#initiatives" class="hover:text-brand-accent">Enforcement Directives</a></li>
+                    <li><a href="#recovery" class="hover:text-brand-accent">Clinical Realignment</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-black text-zinc-900 dark:text-white uppercase tracking-wider text-xs">// Data Integrity Policy</h4>
+                <p class="text-[9px] text-zinc-400">Complies fully with privacy standards governing counseling networks and local sandbox execution guidelines.</p>
+                <div class="flex space-x-3 text-sm pt-1">
+                    <a href="#" class="hover:text-brand-accent"><i class="fa-brands fa-x-twitter text-xs"></i></a>
+                    <a href="#" class="hover:text-brand-accent"><i class="fa-brands fa-facebook-f text-xs"></i></a>
+                    <a href="#" class="hover:text-brand-accent"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[9px] uppercase">
+            <span>&copy; 2026 Say No To Drugs Association. Sandbox simulations executed locally.</span>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:underline">Legal Matrix</a>
+                <a href="#" class="hover:underline">Confidentiality Rules</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const runCanvas = document.getElementById('life-run-canvas');
+    const runCtx = runCanvas.getContext('2d');
+
+    let currentLifeState = "clean"; // "clean" or "ruin"
+    let currentStoryChapter = 0; // Linked to scroll progress (0 to 5)
+    let simulatedAge = 16;
+    let runnerAnimTime = 0;
+    let backgroundEntities = {
+        trees: [],
+        birds: [],
+        animals: [],
+        npcs: [],
+        leaves: []
+    };
+    let bgGridOffset = 0;
+    let transitionGlitchIntensity = 0;
+
+    // Chapters Definition Map
+    const chapters = [
+        { title: "01. Baseline Health", age: 16 },
+        { title: "02. Exposure Matrix", age: 20 },
+        { title: "03. Damage Telemetry", age: 24 },
+        { title: "04. Pressure Vector", age: 28 },
+        { title: "05. Legislative Defense", age: 36 },
+        { title: "06. Stabilization", age: 45 }
+    ];
+
+    function resizeCanvas() {
+        const parent = runCanvas.parentElement;
+        if (parent) {
+            runCanvas.width = parent.clientWidth || window.innerWidth;
+            runCanvas.height = parent.clientHeight || window.innerHeight;
+        } else {
+            runCanvas.width = window.innerWidth;
+            runCanvas.height = window.innerHeight;
+        }
+        initEnvironment();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Helper function to generate procedural environment assets
+    function initEnvironment() {
+        const w = runCanvas.width;
+        backgroundEntities.trees = [];
+        backgroundEntities.birds = [];
+        backgroundEntities.animals = [];
+        backgroundEntities.npcs = [];
+        backgroundEntities.leaves = [];
+
+        // Generate Trees distributed along ground
+        const treeCount = Math.max(4, Math.floor(w / 280));
+        for (let i = 0; i < treeCount; i++) {
+            backgroundEntities.trees.push({
+                x: (i * (w / treeCount)) + Math.random() * 80,
+                scale: 0.8 + Math.random() * 0.5,
+                swayOffset: Math.random() * Math.PI,
+                leafCount: 25 + Math.floor(Math.random() * 15),
+                leafHealth: 1.0 // 0.0 is dead
+            });
+        }
+
+        // Generate friendly NPC walkers
+        const npcCount = Math.max(3, Math.floor(w / 400));
+        for (let i = 0; i < npcCount; i++) {
+            backgroundEntities.npcs.push({
+                x: Math.random() * w,
+                scale: 0.9 + Math.random() * 0.2,
+                speed: 1.0 + Math.random() * 0.8,
+                phase: Math.random() * Math.PI * 2,
+                waveTimer: 0,
+                facingLeft: Math.random() > 0.5,
+                ignoreFactor: 0.0 // 1.0 = walks away fast, ignoring user
+            });
+        }
+
+        // Generate Birds
+        const birdCount = 5;
+        for (let i = 0; i < birdCount; i++) {
+            backgroundEntities.birds.push({
+                x: Math.random() * w,
+                y: 60 + Math.random() * 120,
+                scale: 0.7 + Math.random() * 0.5,
+                speedX: 1.5 + Math.random() * 1.5,
+                flapSpeed: 0.1 + Math.random() * 0.1,
+                flapPhase: Math.random() * Math.PI,
+                fallVelocity: 0
+            });
+        }
+
+        // Generate animals (woodland critters/dogs)
+        const animalCount = 3;
+        for (let i = 0; i < animalCount; i++) {
+            backgroundEntities.animals.push({
+                x: Math.random() * w,
+                scale: 0.6 + Math.random() * 0.4,
+                speed: 1.2 + Math.random() * 1.0,
+                bouncePhase: Math.random() * Math.PI,
+                isCollapsed: false,
+                opacity: 1.0
+            });
+        }
+    }
+
+    function drawTree(ctx, x, groundY, tree, time, state) {
+        const scale = tree.scale;
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        
+        ctx.save();
+        ctx.translate(x, groundY);
+
+        // Trunk
+        ctx.lineWidth = 6 * scale;
+        ctx.strokeStyle = isDarkMode ? "#e4e4e7" : "#27272a";
+        if (state === "ruin") {
+            ctx.strokeStyle = "#52525b"; // Sickly grey
+        }
+        
+        const sway = Math.sin(time * 1.5 + tree.swayOffset) * (state === "clean" ? 0.04 : 0.01);
+        
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        // Bezier curve to represent trunk with minor wind sway
+        ctx.bezierCurveTo(sway * 30, -30 * scale, sway * 60, -80 * scale, sway * 90, -110 * scale);
+        ctx.stroke();
+
+        const tipX = sway * 90;
+        const tipY = -110 * scale;
+
+        // Draw Foliage
+        if (state === "clean") {
+            // Flourishing lush foliage structure
+            ctx.fillStyle = isDarkMode ? "rgba(225, 29, 72, 0.45)" : "rgba(225, 29, 72, 0.3)";
+            ctx.beginPath();
+            ctx.arc(tipX, tipY, 42 * scale, 0, Math.PI * 2);
+            ctx.arc(tipX - 25 * scale, tipY + 10 * scale, 30 * scale, 0, Math.PI * 2);
+            ctx.arc(tipX + 25 * scale, tipY + 10 * scale, 30 * scale, 0, Math.PI * 2);
+            ctx.arc(tipX, tipY - 25 * scale, 35 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Minimalist green botanical highlights to evoke flourishing life
+            ctx.fillStyle = "rgba(16, 185, 129, 0.45)"; // Fresh emerald green
+            ctx.beginPath();
+            ctx.arc(tipX - 10 * scale, tipY - 10 * scale, 20 * scale, 0, Math.PI * 2);
+            ctx.arc(tipX + 15 * scale, tipY - 5 * scale, 15 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Healthy branches
+            ctx.lineWidth = 3 * scale;
+            ctx.strokeStyle = isDarkMode ? "#fafafa" : "#09090b";
+            ctx.beginPath();
+            ctx.moveTo(sway * 60, -80 * scale);
+            ctx.lineTo(sway * 60 + 15 * scale, -95 * scale);
+            ctx.moveTo(sway * 40, -50 * scale);
+            ctx.lineTo(sway * 40 - 15 * scale, -65 * scale);
+            ctx.stroke();
+        } else {
+            // Withered, naked, broken skeletal tree
+            ctx.lineWidth = 3 * scale;
+            ctx.strokeStyle = "#71717a";
+            ctx.beginPath();
+            ctx.moveTo(sway * 60, -80 * scale);
+            ctx.lineTo(sway * 60 + 20 * scale, -100 * scale);
+            ctx.moveTo(sway * 40, -50 * scale);
+            ctx.lineTo(sway * 40 - 18 * scale, -62 * scale);
+            ctx.stroke();
+
+            // Broken branches indicators
+            ctx.fillStyle = "#e11d48";
+            ctx.beginPath();
+            ctx.arc(sway * 60 + 20 * scale, -100 * scale, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    function drawBird(ctx, bird, state) {
+        ctx.save();
+        ctx.translate(bird.x, bird.y);
+
+        const wingFlap = Math.sin(runnerAnimTime * 12 + bird.flapPhase);
+        ctx.lineWidth = 2 * bird.scale;
+        
+        if (state === "clean") {
+            ctx.strokeStyle = document.documentElement.classList.contains('dark') ? "#fafafa" : "#09090b";
+            // Flying silhouette "V" structure
+            ctx.beginPath();
+            ctx.moveTo(-10 * bird.scale, wingFlap * 8 * bird.scale);
+            ctx.quadraticCurveTo(0, -4 * bird.scale, 10 * bird.scale, wingFlap * 8 * bird.scale);
+            ctx.moveTo(0, -4 * bird.scale);
+            ctx.lineTo(0, 4 * bird.scale); // Tail
+            ctx.stroke();
+        } else {
+            // Sickly falling or collapsing birds
+            ctx.strokeStyle = "rgba(225, 29, 72, 0.6)";
+            ctx.beginPath();
+            // Stiff, broken wings downward
+            ctx.moveTo(-8 * bird.scale, 8 * bird.scale);
+            ctx.lineTo(0, 0);
+            ctx.lineTo(8 * bird.scale, 8 * bird.scale);
+            ctx.stroke();
+        }
+
+        ctx.restore();
+    }
+
+    function drawAnimal(ctx, animal, groundY, state) {
+        ctx.save();
+        ctx.translate(animal.x, groundY);
+
+        const bounce = Math.abs(Math.sin(runnerAnimTime * 8 + animal.bouncePhase)) * 12;
+        const isDarkMode = document.documentElement.classList.contains('dark');
+
+        if (state === "clean") {
+            ctx.strokeStyle = isDarkMode ? "#e4e4e7" : "#18181b";
+            ctx.lineWidth = 2 * animal.scale;
+
+            // Simple 4-legged stick animal leaping cheerfully
+            ctx.save();
+            ctx.translate(0, -10 * animal.scale - bounce);
+
+            // Body
+            ctx.beginPath();
+            ctx.moveTo(-15 * animal.scale, 0);
+            ctx.lineTo(15 * animal.scale, 0);
+            ctx.stroke();
+
+            // Neck & Head
+            ctx.beginPath();
+            ctx.moveTo(15 * animal.scale, 0);
+            ctx.lineTo(22 * animal.scale, -12 * animal.scale);
+            ctx.lineTo(27 * animal.scale, -10 * animal.scale);
+            ctx.stroke();
+
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(-15 * animal.scale, 0);
+            ctx.lineTo(-22 * animal.scale, -8 * animal.scale);
+            ctx.stroke();
+
+            // Moving Legs based on hop
+            const legPhase = Math.sin(runnerAnimTime * 10 + animal.bouncePhase);
+            ctx.beginPath();
+            // Back legs
+            ctx.moveTo(-12 * animal.scale, 0);
+            ctx.lineTo(-16 * animal.scale + legPhase * 4, 12 * animal.scale);
+            ctx.moveTo(-8 * animal.scale, 0);
+            ctx.lineTo(-6 * animal.scale - legPhase * 4, 12 * animal.scale);
+            // Front legs
+            ctx.moveTo(10 * animal.scale, 0);
+            ctx.lineTo(6 * animal.scale + legPhase * 4, 12 * animal.scale);
+            ctx.moveTo(14 * animal.scale, 0);
+            ctx.lineTo(18 * animal.scale - legPhase * 4, 12 * animal.scale);
+            ctx.stroke();
+
+            ctx.restore();
+        } else {
+            // Sickly collapsed animal or fading away
+            ctx.strokeStyle = "rgba(113, 113, 122, 0.5)";
+            ctx.lineWidth = 2 * animal.scale;
+            ctx.save();
+            // Collapsed flat on floor
+            ctx.translate(0, 4 * animal.scale);
+
+            // Flat Body
+            ctx.beginPath();
+            ctx.moveTo(-18 * animal.scale, 0);
+            ctx.lineTo(12 * animal.scale, 0);
+            ctx.stroke();
+
+            // Head down
+            ctx.beginPath();
+            ctx.moveTo(12 * animal.scale, 0);
+            ctx.lineTo(18 * animal.scale, 4 * animal.scale);
+            ctx.stroke();
+
+            // Lifeless legs stretched flat
+            ctx.beginPath();
+            ctx.moveTo(-12 * animal.scale, 0);
+            ctx.lineTo(-18 * animal.scale, 2 * animal.scale);
+            ctx.moveTo(8 * animal.scale, 0);
+            ctx.lineTo(14 * animal.scale, 2 * animal.scale);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        ctx.restore();
+    }
+
+    function drawNPC(ctx, npc, groundY, state, userX) {
+        ctx.save();
+        ctx.translate(npc.x, groundY);
+
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const scale = npc.scale;
+        
+        let cycle = runnerAnimTime * 6 * npc.speed + npc.phase;
+        let walkSwing = Math.sin(cycle);
+        
+        ctx.lineWidth = 3 * scale;
+
+        if (state === "clean") {
+            ctx.strokeStyle = isDarkMode ? "#fafafa" : "#09090b";
+            ctx.fillStyle = ctx.strokeStyle;
+
+            // Head
+            ctx.beginPath();
+            ctx.arc(0, -42 * scale, 6 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Spine
+            ctx.beginPath();
+            ctx.moveTo(0, -36 * scale);
+            ctx.lineTo(0, -16 * scale);
+            ctx.stroke();
+
+            // Friendly waving hand
+            ctx.beginPath();
+            ctx.moveTo(0, -32 * scale);
+            if (npc.x > userX - 250 && npc.x < userX + 250) {
+                // Wave at user
+                ctx.lineTo(10 * scale, -45 * scale + Math.sin(runnerAnimTime * 15) * 5 * scale);
+            } else {
+                // Standard swing
+                ctx.lineTo(walkSwing * 10 * scale, -20 * scale);
+            }
+            ctx.moveTo(0, -32 * scale);
+            ctx.lineTo(-walkSwing * 10 * scale, -20 * scale);
+            ctx.stroke();
+
+            // Legs
+            ctx.beginPath();
+            ctx.moveTo(0, -16 * scale);
+            ctx.lineTo(walkSwing * 12 * scale, 0);
+            ctx.moveTo(0, -16 * scale);
+            ctx.lineTo(-walkSwing * 12 * scale, 0);
+            ctx.stroke();
+        } else {
+            // State: RUIN. Walkers ignore, face away, and distance themselves.
+            ctx.strokeStyle = "rgba(113, 113, 122, 0.4)"; // Faded and distant
+            ctx.fillStyle = ctx.strokeStyle;
+
+            // Run away posture / facing away from user
+            let awayDirection = npc.x < userX ? -1 : 1; // Walk away from user coordinates
+            npc.x += awayDirection * 1.5; // Accelerate separation speed
+
+            // Head tilted forward (rushing away)
+            ctx.beginPath();
+            ctx.arc(awayDirection * 4 * scale, -40 * scale, 5.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Spine leaning forward (away from user)
+            ctx.beginPath();
+            ctx.moveTo(0, -34 * scale);
+            ctx.lineTo(-awayDirection * 4 * scale, -16 * scale);
+            ctx.stroke();
+
+            // Tight, unsupportive hands tucked close or rushing
+            ctx.beginPath();
+            ctx.moveTo(0, -30 * scale);
+            ctx.lineTo(awayDirection * 12 * scale, -22 * scale);
+            ctx.moveTo(0, -30 * scale);
+            ctx.lineTo(-awayDirection * 8 * scale, -22 * scale);
+            ctx.stroke();
+
+            // Rapid stride to walk out of scope
+            ctx.beginPath();
+            ctx.moveTo(-awayDirection * 4 * scale, -16 * scale);
+            ctx.lineTo(walkSwing * 14 * scale, 0);
+            ctx.moveTo(-awayDirection * 4 * scale, -16 * scale);
+            ctx.lineTo(-walkSwing * 14 * scale, 0);
+            ctx.stroke();
+        }
+
+        ctx.restore();
+    }
+
+    function drawDetailedStickman(ctx, x, y, scale, time, state, chapterIndex) {
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        let isRuin = (state !== "clean");
+        let progression = chapterIndex / 5.0; // 0.0 to 1.0
+
+        ctx.strokeStyle = !isRuin ? (isDarkMode ? '#fafafa' : '#09090b') : '#e11d48';
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.lineWidth = 5 * scale;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        let runCycle = time * (isRuin ? (5 - (2 * progression)) : 10); 
+        let poseTilt = isRuin ? (0.3 + (0.45 * progression)) : 0.08; 
+
+        let hipX = x;
+        let hipY = y;
+
+        // Apply dizzy wobble to the entire character if in ruin state
+        if (isRuin) {
+            let wobbleAmp = 14 * progression;
+            let wobbleFreq = 5.5;
+            hipX += Math.sin(time * wobbleFreq) * wobbleAmp;
+            hipY += Math.cos(time * wobbleFreq * 1.8) * (wobbleAmp * 0.4);
+        }
+
+        // Calculate positions
+        let neckX = hipX + Math.sin(poseTilt) * (42 * scale);
+        let neckY = hipY - Math.cos(poseTilt) * (42 * scale);
+
+        let headX = neckX + Math.sin(poseTilt * 0.5) * (14 * scale);
+        let headY = neckY - Math.cos(poseTilt * 0.5) * (14 * scale);
+
+        // Legs configuration
+        let strideRange = isRuin ? (0.75 - (0.45 * progression)) : 0.95;
+        let angleOffset = isRuin ? Math.sin(time * 3.5) * 0.2 : 0; // uneven limp
+
+        let leg1HipAngle = Math.sin(runCycle) * strideRange + angleOffset;
+        let leg1KneeAngle = Math.max(0, Math.sin(runCycle - Math.PI/4)) * strideRange;
+        let leg1KneeX = hipX + Math.sin(leg1HipAngle) * (20 * scale);
+        let leg1KneeY = hipY + Math.cos(leg1HipAngle) * (20 * scale);
+        let leg1FootX = leg1KneeX + Math.sin(leg1HipAngle - leg1KneeAngle) * (18 * scale);
+        let leg1FootY = leg1KneeY + Math.cos(leg1HipAngle - leg1KneeAngle) * (18 * scale);
+
+        // Same for leg 2
+        let leg2HipAngle = Math.sin(runCycle + Math.PI) * strideRange - angleOffset;
+        let leg2KneeAngle = Math.max(0, Math.sin(runCycle + Math.PI - Math.PI/4)) * strideRange;
+        let leg2KneeX = hipX + Math.sin(leg2HipAngle) * (20 * scale);
+        let leg2KneeY = hipY + Math.cos(leg2HipAngle) * (20 * scale);
+        let leg2FootX = leg2KneeX + Math.sin(leg2HipAngle - leg2KneeAngle) * (18 * scale);
+        let leg2FootY = leg2KneeY + Math.cos(leg2HipAngle - leg2KneeAngle) * (18 * scale);
+
+        // Arms configuration
+        let arm1ShoulderAngle = Math.sin(runCycle + Math.PI) * 0.7 * strideRange;
+        let arm1ElbowX = neckX + Math.sin(arm1ShoulderAngle) * (16 * scale);
+        let arm1ElbowY = neckY + Math.cos(arm1ShoulderAngle) * (16 * scale);
+        let arm1HandX = arm1ElbowX + Math.sin(arm1ShoulderAngle + 0.5) * (14 * scale);
+        let arm1HandY = arm1ElbowY + Math.cos(arm1ShoulderAngle + 0.5) * (14 * scale);
+
+        let arm2ShoulderAngle = Math.sin(runCycle) * 0.7 * strideRange;
+        let arm2ElbowX = neckX + Math.sin(arm2ShoulderAngle) * (16 * scale);
+        let arm2ElbowY = neckY + Math.cos(arm2ShoulderAngle) * (16 * scale);
+        let arm2HandX = arm2ElbowX + Math.sin(arm2ShoulderAngle + 0.5) * (14 * scale);
+        let arm2HandY = arm2ElbowY + Math.cos(arm2ShoulderAngle + 0.5) * (14 * scale);
+
+        // Draw Spine/Torso
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(neckX, neckY);
+        ctx.stroke();
+
+        // Draw Head
+        ctx.beginPath();
+        ctx.arc(headX, headY, 9 * scale, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Heart pulse highlight (neat minimal brutalist design)
+        let pulseRate = isRuin ? (1.5 + (1.5 * progression)) : 1.1; 
+        let pulseSize = (4 + Math.sin(time * 12 * pulseRate) * 1.5) * scale;
+        ctx.fillStyle = '#e11d48';
+        ctx.beginPath();
+        ctx.arc(neckX - (neckX - hipX) * 0.3, neckY - (neckY - hipY) * 0.3, pulseSize, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = ctx.strokeStyle;
+
+        // Draw Leg 1
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(leg1KneeX, leg1KneeY);
+        ctx.lineTo(leg1FootX, leg1FootY);
+        ctx.stroke();
+
+        // Draw Leg 2
+        ctx.beginPath();
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(leg2KneeX, leg2KneeY);
+        ctx.lineTo(leg2FootX, leg2FootY);
+        ctx.stroke();
+
+        // Draw Arm 1
+        ctx.beginPath();
+        ctx.moveTo(neckX, neckY);
+        ctx.lineTo(arm1ElbowX, arm1ElbowY);
+        ctx.lineTo(arm1HandX, arm1HandY);
+        ctx.stroke();
+
+        // Draw Arm 2
+        ctx.beginPath();
+        ctx.moveTo(neckX, neckY);
+        ctx.lineTo(arm2ElbowX, arm2ElbowY);
+        ctx.lineTo(arm2HandX, arm2HandY);
+        ctx.stroke();
+
+        // Draw Dizzy Spirals above head if in Substance timeline
+        if (isRuin) {
+            ctx.save();
+            ctx.translate(headX, headY - 18 * scale);
+            ctx.strokeStyle = "#e11d48";
+            ctx.lineWidth = 1.8 * scale;
+            ctx.beginPath();
+            for (let angle = 0; angle < Math.PI * 3.5; angle += 0.2) {
+                let r = (2 + angle * 1.2) * scale;
+                let sx = Math.cos(angle + time * 12) * r;
+                let sy = Math.sin(angle + time * 12) * r * 0.55;
+                if (angle === 0) ctx.moveTo(sx, sy);
+                else ctx.lineTo(sx, sy);
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
+    function animateLifeTimeline() {
+        if (runCanvas.width === 0 || runCanvas.height === 0) {
+            resizeCanvas();
+        }
+        
+        runCtx.clearRect(0, 0, runCanvas.width, runCanvas.height);
+
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const groundY = runCanvas.height * (runCanvas.width > 768 ? 0.65 : 0.55);
+        const userScale = runCanvas.width > 1024 ? 1.3 : (runCanvas.width > 768 ? 1.1 : 0.85);
+        const userX = runCanvas.width * (runCanvas.width > 1200 ? 0.35 : (runCanvas.width > 768 ? 0.42 : 0.6));
+
+        // Background grid rendering
+        let gridColor = isDarkMode ? 'rgba(250, 250, 250, 0.02)' : 'rgba(9, 9, 11, 0.02)';
+        if (currentLifeState === "ruin") {
+            gridColor = isDarkMode ? 'rgba(225, 29, 72, 0.03)' : 'rgba(225, 29, 72, 0.04)';
+        }
+        let lineSpacing = 35;
+
+        runCtx.strokeStyle = gridColor;
+        runCtx.lineWidth = 1;
+
+        let scrollSpeed = currentLifeState === "clean" ? 2.5 : (2.5 - (1.8 * (currentStoryChapter / 5)));
+        bgGridOffset = (bgGridOffset - scrollSpeed) % lineSpacing;
+
+        // Draw dynamic grid lines
+        for (let x = bgGridOffset; x < runCanvas.width; x += lineSpacing) {
+            runCtx.beginPath();
+            if (currentLifeState === "ruin" && currentStoryChapter > 1) {
+                let offsetAmp = (currentStoryChapter / 5.0) * 12;
+                runCtx.moveTo(x + Math.sin(x * 0.02 + runnerAnimTime * 3) * offsetAmp, 0);
+                runCtx.lineTo(x + Math.sin(x * 0.02 + runnerAnimTime * 3) * offsetAmp, runCanvas.height);
+            } else {
+                runCtx.moveTo(x, 0);
+                runCtx.lineTo(x, runCanvas.height);
+            }
+            runCtx.stroke();
+        }
+
+        // Draw Environment Underlay
+        if (currentLifeState === "clean") {
+            runCtx.strokeStyle = isDarkMode ? "rgba(16, 185, 129, 0.25)" : "rgba(16, 185, 129, 0.35)";
+            runCtx.lineWidth = 1.5;
+            for (let x = 0; x < runCanvas.width; x += 15) {
+                let grassHeight = 8 + Math.abs(Math.sin(x * 0.05 + runnerAnimTime)) * 10;
+                let grassTilt = Math.sin(runnerAnimTime * 2 + x) * 3;
+                runCtx.beginPath();
+                runCtx.moveTo(x, groundY + 2);
+                runCtx.lineTo(x + grassTilt, groundY - grassHeight);
+                runCtx.stroke();
+            }
+        } else {
+            runCtx.strokeStyle = "rgba(113, 113, 122, 0.25)";
+            runCtx.lineWidth = 1;
+            for (let x = 0; x < runCanvas.width; x += 22) {
+                let grassHeight = 4 + Math.sin(x) * 3;
+                runCtx.beginPath();
+                runCtx.moveTo(x, groundY + 2);
+                runCtx.lineTo(x + 5, groundY + grassHeight); 
+                runCtx.stroke();
+            }
+        }
+
+        backgroundEntities.trees.forEach(tree => {
+            drawTree(runCtx, tree.x, groundY, tree, runnerAnimTime, currentLifeState);
+        });
+
+        backgroundEntities.animals.forEach(animal => {
+            if (currentLifeState === "clean") {
+                animal.x = (animal.x - scrollSpeed * animal.speed) % (runCanvas.width + 100);
+                if (animal.x < -100) animal.x = runCanvas.width + Math.random() * 200;
+            }
+            drawAnimal(runCtx, animal, groundY, currentLifeState);
+        });
+
+        backgroundEntities.npcs.forEach(npc => {
+            if (currentLifeState === "clean") {
+                npc.x = (npc.x - scrollSpeed * 0.4) % (runCanvas.width + 100);
+                if (npc.x < -100) npc.x = runCanvas.width + 100;
+            }
+            drawNPC(runCtx, npc, groundY, currentLifeState, userX);
+        });
+
+        backgroundEntities.birds.forEach(bird => {
+            if (currentLifeState === "clean") {
+                bird.x = (bird.x - bird.speedX) % (runCanvas.width + 100);
+                if (bird.x < -100) {
+                    bird.x = runCanvas.width + 100;
+                    bird.y = 60 + Math.random() * 120;
+                    bird.fallVelocity = 0;
+                }
+            } else {
+                bird.fallVelocity += 0.15;
+                bird.y += bird.fallVelocity;
+                bird.x -= bird.speedX * 0.2;
+                if (bird.y > groundY) {
+                    bird.y = groundY;
+                    bird.fallVelocity = 0;
+                }
+            }
+            drawBird(runCtx, bird, currentLifeState);
+        });
+
+        runnerAnimTime += 0.016;
+
+        runCtx.strokeStyle = isDarkMode ? 'rgba(250, 250, 250, 0.15)' : 'rgba(9, 9, 11, 0.15)';
+        if (currentLifeState === "ruin") {
+            runCtx.strokeStyle = 'rgba(225, 29, 72, 0.3)';
+        }
+        runCtx.lineWidth = 2.5;
+        runCtx.beginPath();
+        runCtx.moveTo(0, groundY); 
+        runCtx.lineTo(runCanvas.width, groundY);
+        runCtx.stroke();
+
+        drawDetailedStickman(runCtx, userX, groundY - 44 * userScale, userScale, runnerAnimTime, currentLifeState, currentStoryChapter);
+
+        if (transitionGlitchIntensity > 0) {
+            runCtx.fillStyle = `rgba(225, 29, 72, ${transitionGlitchIntensity * 0.15})`;
+            runCtx.fillRect(0, 0, runCanvas.width, runCanvas.height);
+            transitionGlitchIntensity -= 0.06;
+        }
+
+        requestAnimationFrame(animateLifeTimeline);
+    }
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.25
+    };
+
+    const sectionChapterMap = {
+        'home': 0,
+        'about': 1,
+        'harmful-effects': 2,
+        'youth': 3,
+        'prevention': 4,
+        'initiatives': 4,
+        'recovery': 5,
+        'pledge': 5,
+        'help': 5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                if (id in sectionChapterMap) {
+                    updateStoryChapter(sectionChapterMap[id]);
+                }
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+
+    function updateStoryChapter(idx) {
+        currentStoryChapter = idx;
+        const chap = chapters[idx];
+        simulatedAge = chap.age;
+    }
+
+    function setLifeState(state) {
+        currentLifeState = state;
+        transitionGlitchIntensity = 1.0;
+        
+        const cleanBtn = document.getElementById('ctrl-state-clean');
+        const ruinBtn = document.getElementById('ctrl-state-ruin');
+        const commentary = document.getElementById('life-state-commentary');
+
+        if (state === 'clean') {
+            cleanBtn.className = "py-3 px-3 border-2 border-zinc-900 dark:border-white bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 transition-all flex items-center justify-between text-left brutal-shadow";
+            ruinBtn.className = "py-3 px-3 border-2 border-zinc-200 dark:border-zinc-850 bg-transparent text-zinc-400 hover:border-brand-accent hover:text-brand-accent transition-all flex items-center justify-between text-left";
+            commentary.innerText = `System Status: Pristine. Grass is growing, birds are singing, and people walk beside you.`;
+            commentary.className = "mt-4 text-[9px] font-bold text-zinc-900 dark:text-zinc-100 italic transition-colors bg-zinc-100 dark:bg-zinc-950 p-2 border border-dashed border-zinc-900 dark:border-zinc-750";
+        } else {
+            ruinBtn.className = "py-3 px-3 border-2 border-brand-accent bg-brand-accent text-white transition-all flex items-center justify-between text-left brutal-shadow-red";
+            cleanBtn.className = "py-3 px-3 border-2 border-zinc-200 dark:border-zinc-850 bg-transparent text-zinc-400 hover:border-zinc-900 dark:hover:white hover:text-zinc-900 dark:hover:text-white transition-all flex items-center justify-between text-left";
+            commentary.innerText = `CRITICAL FAILURE ALERT: Animals collapsed, foliage withering, and other citizens are actively walking away.`;
+            commentary.className = "mt-4 text-[9px] font-black text-brand-accent bg-red-100 dark:bg-red-950/40 p-2 border border-brand-accent animate-pulse";
+        }
+
+        if (state === 'ruin') {
+            backgroundEntities.birds.forEach(b => {
+                b.fallVelocity = 0.5;
+            });
+        }
+        updateStoryChapter(currentStoryChapter);
+    }
+
+    // --- TERMINAL SIMULATOR LOGIC ---
+    let termStress = 0;
+    let termStage = 0;
+    let termTypingInterval;
+
+    const termScenarios = [
+        {
+            stage: "STAGE 01 : ACADEMIC PRESSURE",
+            prompt: "> Detected anomaly: It's finals week. A top-performing classmate slides a small orange capsule across the library desk. 'It's adderall. Everyone uses it to study. Just take half.'",
+            opts: [
+                { text: "Accept it quietly to avoid offending them.", stressAdded: 45, nextText: "> Critical Error: Synaptic dependency initialized. Stress spikes as you rely on synthetics to function." },
+                { text: "Firmly decline: 'I don't need chemical focus. I run clean.'", stressAdded: -10, nextText: "> Success: Boundary successfully mapped. Natural focus pathways remain completely intact." },
+                { text: "Say 'Maybe later' and pocket it.", stressAdded: 25, nextText: "> Warning: Proximity risk. Keeping the compound accessible dramatically increases temptation vectors." }
+            ]
+        },
+        {
+            stage: "STAGE 02 : PEER ISOLATION TEST",
+            prompt: "> Detected anomaly: At a weekend gathering, friends pass around a synthetic compound. They notice you aren't participating and mock your sobriety. 'You're ruining the vibe.'",
+            opts: [
+                { text: "Take a micro-dose just to blend in and stop the harassment.", stressAdded: 50, nextText: "> System Failure: Social pressure bypassed logic walls. Tolerance levels breached." },
+                { text: "Argue aggressively, causing a major scene.", stressAdded: 30, nextText: "> Sub-optimal: Conflict triggers heavy cortisol loads, though biological timeline remains clean." },
+                { text: "Exit the perimeter. Realign with communities that respect your health.", stressAdded: -15, nextText: "> Superior Action: Relational friction avoided. Timeline sovereignty preserved." }
+            ]
+        },
+        {
+            stage: "STAGE 03 : INTERNAL EXHAUSTION",
+            prompt: "> Detected anomaly: Deep career burnout. You haven't slept properly in days. You remember the contact of a dealer who sells depressants that 'force you to sleep'.",
+            opts: [
+                { text: "Contact an anonymous counselor at 1908.", stressAdded: -30, nextText: "> Mission Accomplished: Medical intervention routed safely. Neuro-baseline protected. YOU WIN." },
+                { text: "Make the call. Just this one time to get some rest.", stressAdded: 60, nextText: "> TERMINAL FAILURE. Depressant loop initiated. Autonomic collapse imminent." },
+                { text: "Drink heavily instead.", stressAdded: 40, nextText: "> Warning: Substituting one toxin for another. Visceral decay still progressing." }
+            ]
+        }
+    ];
+
+    function startTerminalSimulation() {
+        termStress = 0;
+        termStage = 0;
+        updateTerminalStress();
+        renderTerminalStage();
+    }
+
+    function updateTerminalStress() {
+        if (termStress < 0) termStress = 0;
+        if (termStress > 100) termStress = 100;
+        
+        const bar = document.getElementById('term-stress-bar');
+        const val = document.getElementById('term-stress-val');
+        
+        bar.style.width = `${termStress}%`;
+        val.innerText = `${termStress}%`;
+
+        if (termStress > 70) {
+            bar.className = "h-full bg-brand-accent transition-all duration-500 animate-pulse";
+            val.className = "text-brand-accent font-black animate-pulse";
+            setLifeState('ruin');
+        } else if (termStress > 30) {
+            bar.className = "h-full bg-amber-500 transition-all duration-500";
+            val.className = "text-amber-500 font-black";
+        } else {
+            bar.className = "h-full bg-emerald-500 transition-all duration-500";
+            val.className = "text-emerald-500 font-black";
+            if (termStage > 0 && currentLifeState === 'ruin') setLifeState('clean');
+        }
+    }
+
+    function typeTerminalText(text, callback) {
+        clearInterval(termTypingInterval);
+        const textContainer = document.getElementById('term-text');
+        textContainer.innerHTML = '';
+        let i = 0;
+        
+        termTypingInterval = setInterval(() => {
+            textContainer.innerHTML += text.charAt(i);
+            i++;
+            if (i >= text.length) {
+                clearInterval(termTypingInterval);
+                if(callback) callback();
+            }
+        }, 20);
+    }
+
+    function renderTerminalStage() {
+        if (termStage >= termScenarios.length || termStress >= 100) {
+            endTerminalSimulation();
+            return;
+        }
+
+        const data = termScenarios[termStage];
+        document.getElementById('term-stage-label').innerText = `// ${data.stage}`;
+        const optionsContainer = document.getElementById('term-options');
+        optionsContainer.innerHTML = '';
+
+        typeTerminalText(data.prompt, () => {
+            optionsContainer.innerHTML = data.opts.map((opt, index) => `
+                <button onclick="handleTerminalChoice(${index})" class="w-full p-3 text-left text-[10px] font-bold border border-zinc-900 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-brand-accent hover:text-brand-accent transition-all flex items-start space-x-3">
+                    <span class="text-zinc-400 mt-0.5">[${index + 1}]</span>
+                    <span>${opt.text}</span>
+                </button>
+            `).join('');
+        });
+    }
+
+    function handleTerminalChoice(optIndex) {
+        const data = termScenarios[termStage];
+        const selectedOpt = data.opts[optIndex];
+        
+        termStress += selectedOpt.stressAdded;
+        updateTerminalStress();
+
+        document.getElementById('term-options').innerHTML = '';
+        
+        typeTerminalText(selectedOpt.nextText, () => {
+            setTimeout(() => {
+                termStage++;
+                renderTerminalStage();
+            }, 2500);
+        });
+    }
+
+    function endTerminalSimulation() {
+        const optionsContainer = document.getElementById('term-options');
+        document.getElementById('term-stage-label').innerText = "// SIMULATION TERMINATED";
+        
+        let finalText = "";
+        if (termStress >= 100) {
+            finalText = "> FATAL OVERLOAD. Your timeline has collapsed under biological and social stress. Reboot required.";
+        } else if (termStress > 50) {
+            finalText = "> SIMULATION COMPLETE. Timeline survived, but sustained moderate structural damage. Guard your perimeter better.";
+        } else {
+            finalText = "> SIMULATION COMPLETE. Excellent evasion protocols. Your organic baseline remains untouched. You are in control.";
+        }
+
+        typeTerminalText(finalText, () => {
+            optionsContainer.innerHTML = `
+                <button onclick="startTerminalSimulation()" class="w-full mt-4 py-3 text-center text-[10px] font-black uppercase bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:bg-brand-accent dark:hover:bg-brand-accent transition-all">
+                    Restart Terminal
+                </button>
+            `;
+        });
+    }
+
+    // --- SYNAPTIC REFLEX TESTER LOGIC ---
+    let reflexMode = 'baseline';
+    let reflexState = 'idle'; // idle, waiting, ready, finished
+    let reflexStartTime = 0;
+    let reflexTimeout;
+    let reflexFalseStartTimeout;
+
+    function setReflexMode(mode) {
+        reflexMode = mode;
+        document.querySelectorAll('[id^="btn-reflex-"]').forEach(btn => {
+            btn.className = "px-3 py-1.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 text-[9px] font-black tracking-widest border border-transparent hover:border-zinc-500 uppercase transition-all";
+        });
+        document.getElementById(`btn-reflex-${mode}`).className = "px-3 py-1.5 bg-brand-accent text-white text-[9px] font-black tracking-widest border border-brand-accent uppercase transition-all";
+        resetReflex();
+    }
+
+    function resetReflex() {
+        clearTimeout(reflexTimeout);
+        clearTimeout(reflexFalseStartTimeout);
+        reflexState = 'idle';
+        const pad = document.getElementById('reflex-pad');
+        pad.className = "w-full h-48 border-2 border-zinc-900 dark:border-zinc-100 flex items-center justify-center cursor-pointer transition-colors bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 select-none brutal-shadow";
+        document.getElementById('reflex-pad-text').innerText = "CLICK TO START";
+        document.getElementById('reflex-pad-text').className = "font-black text-xl tracking-widest uppercase text-zinc-900 dark:text-white transition-all";
+        document.getElementById('reflex-time-output').innerHTML = `000<span class="text-sm text-zinc-400 ml-1 tracking-normal">ms</span>`;
+        document.getElementById('reflex-diagnosis').innerText = "AWAITING INPUT...";
+        document.getElementById('reflex-diagnosis').className = "text-xs font-black text-zinc-900 dark:text-white mt-1 leading-relaxed";
+    }
+
+    function handleReflexClick() {
+        const pad = document.getElementById('reflex-pad');
+        const padText = document.getElementById('reflex-pad-text');
+        const timeOut = document.getElementById('reflex-time-output');
+        const diagnosis = document.getElementById('reflex-diagnosis');
+
+        if (reflexState === 'idle' || reflexState === 'finished') {
+            // Start the sequence
+            reflexState = 'waiting';
+            pad.className = "w-full h-48 border-2 border-brand-accent flex items-center justify-center cursor-pointer select-none bg-red-50 dark:bg-red-950/20 brutal-shadow-red";
+            padText.innerText = "WAIT FOR GREEN...";
+            padText.className = "font-black text-xl tracking-widest uppercase text-brand-accent animate-pulse";
+            
+            let waitTime = 1500 + Math.random() * 2500;
+
+            if (reflexMode === 'stimulant') {
+                // Random false flicker to induce misfire
+                reflexFalseStartTimeout = setTimeout(() => {
+                    if (reflexState === 'waiting') {
+                        pad.className = "w-full h-48 border-2 border-emerald-500 flex items-center justify-center cursor-pointer select-none bg-emerald-500/80 brutal-shadow";
+                        setTimeout(() => {
+                            if (reflexState === 'waiting') {
+                                pad.className = "w-full h-48 border-2 border-brand-accent flex items-center justify-center cursor-pointer select-none bg-red-50 dark:bg-red-950/20 brutal-shadow-red";
+                            }
+                        }, 75); // ultra-short false flash
+                    }
+                }, waitTime * 0.4 + Math.random() * 500);
+            }
+
+            reflexTimeout = setTimeout(() => {
+                reflexState = 'ready';
+                reflexStartTime = performance.now();
+                pad.className = "w-full h-48 border-2 border-zinc-900 dark:border-white flex items-center justify-center cursor-pointer select-none bg-emerald-500 brutal-shadow";
+                padText.innerText = "CLICK NOW!";
+                padText.className = "font-black text-4xl tracking-widest uppercase text-white";
+                
+                if (reflexMode === 'depressant') {
+                    // Simulate visual blur / latency
+                    padText.style.filter = "blur(6px)";
+                    setTimeout(() => { padText.style.filter = "none"; }, 350);
+                }
+            }, waitTime);
+
+        } else if (reflexState === 'waiting') {
+            // False start penalty
+            clearTimeout(reflexTimeout);
+            clearTimeout(reflexFalseStartTimeout);
+            reflexState = 'finished';
+            pad.className = "w-full h-48 border-2 border-brand-accent flex items-center justify-center cursor-pointer select-none bg-brand-accent brutal-shadow-red";
+            padText.innerText = "FALSE START";
+            padText.className = "font-black text-3xl tracking-widest uppercase text-white";
+            
+            timeOut.innerHTML = `ERR<span class="text-sm text-zinc-400 ml-1 tracking-normal">ms</span>`;
+            if (reflexMode === 'stimulant') {
+                diagnosis.innerText = "PARANOID MISFIRE DETECTED. Hyper-vigilance caused premature synaptic discharge. (Failed)";
+                diagnosis.className = "text-xs font-black text-brand-accent mt-1 leading-relaxed";
+            } else {
+                diagnosis.innerText = "IMPULSIVE REACTION. You clicked before the signal. (Failed)";
+                diagnosis.className = "text-xs font-black text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed";
+            }
+
+        } else if (reflexState === 'ready') {
+            // Successful click
+            const endTime = performance.now();
+            let reactionTime = Math.round(endTime - reflexStartTime);
+            
+            if (reflexMode === 'depressant') {
+                reactionTime += 280 + Math.random() * 120; // Add synthetic physical latency
+            }
+
+            reflexState = 'finished';
+            pad.className = "w-full h-48 border-2 border-zinc-900 dark:border-zinc-100 flex items-center justify-center cursor-pointer select-none bg-zinc-200 dark:bg-zinc-800 brutal-shadow";
+            padText.innerText = "TEST COMPLETE";
+            padText.className = "font-black text-xl tracking-widest uppercase text-zinc-900 dark:text-white";
+            padText.style.filter = "none";
+            
+            timeOut.innerHTML = `${reactionTime}<span class="text-sm text-zinc-400 ml-1 tracking-normal">ms</span>`;
+            
+            if (reflexMode === 'baseline') {
+                diagnosis.innerText = reactionTime < 320 ? "OPTIMAL. Healthy neural pathways intact." : "AVERAGE BASELINE. Standard synaptic response recorded.";
+                diagnosis.className = "text-xs font-black text-emerald-500 mt-1 leading-relaxed";
+            } else if (reflexMode === 'depressant') {
+                diagnosis.innerText = `MOTOR SUPPRESSION DETECTED. Reaction severely delayed due to synthetic synaptic lethargy.`;
+                diagnosis.className = "text-xs font-black text-amber-500 mt-1 leading-relaxed";
+            } else if (reflexMode === 'stimulant') {
+                 diagnosis.innerText = reactionTime < 200 ? "ERRATIC SPIKE. Unstable, jittery synaptic firing. Unsustainable." : "CNS EXHAUSTION. Post-stimulant fatigue slowing reaction times.";
+                 diagnosis.className = "text-xs font-black text-brand-accent mt-1 leading-relaxed";
+            }
+            
+            // Auto reset prompt
+            setTimeout(() => {
+                if(reflexState === 'finished') {
+                    document.getElementById('reflex-pad-text').innerText = "CLICK TO RETRY";
+                }
+            }, 2000);
+        }
+    }
+
+    // --- NEUROPLASTICITY RECOVERY SIMULATION LOGIC ---
+    const neuroSvgNodes = [];
+    const neuroSvgLinks = [];
+    const numNodes = 18;
+
+    function initNeuroHealingSvg() {
+        const nodesGroup = document.getElementById('neuro-nodes');
+        const linksGroup = document.getElementById('neuro-links');
+        
+        if(!nodesGroup || !linksGroup) return;
+
+        for(let i=0; i<numNodes; i++) {
+            neuroSvgNodes.push({
+                id: i,
+                x: 20 + Math.random() * 160,
+                y: 20 + Math.random() * 160,
+                baseHealth: Math.random()
+            });
+        }
+
+        for(let i=0; i<numNodes; i++) {
+            for(let j=i+1; j<numNodes; j++) {
+                let dx = neuroSvgNodes[i].x - neuroSvgNodes[j].x;
+                let dy = neuroSvgNodes[i].y - neuroSvgNodes[j].y;
+                if (Math.sqrt(dx*dx + dy*dy) < 65) {
+                    neuroSvgLinks.push({source: i, target: j});
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", neuroSvgNodes[i].x);
+                    line.setAttribute("y1", neuroSvgNodes[i].y);
+                    line.setAttribute("x2", neuroSvgNodes[j].x);
+                    line.setAttribute("y2", neuroSvgNodes[j].y);
+                    line.setAttribute("id", `link-${i}-${j}`);
+                    line.setAttribute("class", "transition-all duration-300");
+                    linksGroup.appendChild(line);
+                }
+            }
+        }
+
+        neuroSvgNodes.forEach(node => {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", node.x);
+            circle.setAttribute("cy", node.y);
+            circle.setAttribute("r", 4);
+            circle.setAttribute("id", `node-${node.id}`);
+            circle.setAttribute("class", "transition-all duration-500");
+            nodesGroup.appendChild(circle);
+        });
+
+        updateNeuroHealing();
+    }
+
+    function updateNeuroHealing() {
+        const slider = document.getElementById('healing-slider');
+        if(!slider) return;
+
+        const months = parseInt(slider.value); 
+        const progress = months / 60; 
+
+        let timeText = months === 0 ? "Day 0 (Detox)" : (months < 12 ? `${months} Months` : `${(months/12).toFixed(1)} Years`);
+        document.getElementById('healing-time-display').innerText = timeText;
+
+        let dopamineVal = 15 + (progress * 85); 
+        let greyMatterVal = 32 + (progress * 65);
+        
+        let dopaColor = dopamineVal > 75 ? 'bg-emerald-500' : (dopamineVal > 40 ? 'bg-amber-500' : 'bg-brand-accent');
+        let greyColor = greyMatterVal > 75 ? 'bg-emerald-500' : (greyMatterVal > 40 ? 'bg-amber-500' : 'bg-brand-accent');
+
+        document.getElementById('heal-bar-dopamine').style.width = `${Math.min(100, dopamineVal)}%`;
+        document.getElementById('heal-bar-dopamine').className = `h-full transition-all ${dopaColor}`;
+        document.getElementById('heal-stat-dopamine').innerText = `${Math.round(dopamineVal)}% ${dopamineVal > 75 ? '(Restored)' : ''}`;
+        document.getElementById('heal-stat-dopamine').className = `font-black ${dopamineVal > 75 ? 'text-emerald-500' : 'text-brand-accent'}`;
+
+        document.getElementById('heal-bar-grey').style.width = `${Math.min(100, greyMatterVal)}%`;
+        document.getElementById('heal-bar-grey').className = `h-full transition-all ${greyColor}`;
+        document.getElementById('heal-stat-grey').innerText = `${Math.round(greyMatterVal)}% ${greyMatterVal > 75 ? '(Stabilized)' : ''}`;
+        document.getElementById('heal-stat-grey').className = `font-black ${greyMatterVal > 75 ? 'text-emerald-500' : 'text-brand-accent'}`;
+
+        let cogText = "Impaired";
+        let cogWidth = 20 + (progress * 80);
+        if (months > 18) cogText = "Functional Baseline";
+        if (months > 48) cogText = "Fully Optimized";
+        
+        document.getElementById('heal-bar-cog').style.width = `${cogWidth}%`;
+        document.getElementById('heal-bar-cog').className = `h-full transition-all ${cogWidth > 80 ? 'bg-emerald-500' : 'bg-amber-500'}`;
+        document.getElementById('heal-stat-cog').innerText = cogText;
+        document.getElementById('heal-stat-cog').className = `font-black ${cogWidth > 80 ? 'text-emerald-500' : 'text-amber-500'}`;
+
+        neuroSvgNodes.forEach(node => {
+            const circle = document.getElementById(`node-${node.id}`);
+            if(!circle) return;
+            let isHealed = progress > (node.baseHealth * 0.8);
+            if (isHealed) {
+                circle.setAttribute("fill", "#10b981"); 
+                circle.setAttribute("r", 5);
+            } else {
+                circle.setAttribute("fill", "#e11d48"); 
+                circle.setAttribute("r", 3);
+            }
+        });
+
+        neuroSvgLinks.forEach(link => {
+            const line = document.getElementById(`link-${link.source}-${link.target}`);
+            if(!line) return;
+            const sourceHealed = progress > (neuroSvgNodes[link.source].baseHealth * 0.8);
+            const targetHealed = progress > (neuroSvgNodes[link.target].baseHealth * 0.8);
+            
+            if (sourceHealed && targetHealed) {
+                line.setAttribute("stroke", "rgba(16, 185, 129, 0.6)");
+                line.setAttribute("stroke-width", "2.5");
+            } else if (sourceHealed || targetHealed) {
+                line.setAttribute("stroke", "rgba(245, 158, 11, 0.4)"); 
+                line.setAttribute("stroke-width", "1.5");
+            } else {
+                line.setAttribute("stroke", "rgba(225, 29, 72, 0.15)"); 
+                line.setAttribute("stroke-width", "1");
+            }
+        });
+
+        document.getElementById('healing-time-display').className = `text-xl font-black ${progress > 0.8 ? 'text-emerald-500' : 'text-brand-accent'}`;
+    }
+
+    // MAIN STARTUP CALL
+    let animationStarted = false;
+    function startAnimation() {
+        if (!animationStarted) {
+            animationStarted = true;
+            resizeCanvas();
+            animateLifeTimeline();
+            initNeuroHealingSvg(); // Initialize Healing widget safely
+        }
+    }
+
+    if (document.readyState === 'complete') {
+        startAnimation();
+    } else {
+        window.addEventListener('load', startAnimation);
+        document.addEventListener('DOMContentLoaded', startAnimation);
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+    function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    }
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', toggleDarkMode);
+    themeToggleMobileBtn.addEventListener('click', toggleDarkMode);
+
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+    const searchDb = [
+        { title: "Nasha Mukt Bharat Action Campaign", section: "initiatives", desc: "National structural initiatives and legislative buffers" },
+        { title: "Direct Helpline Coordinates (1908)", section: "help", desc: "Toll-free 24/7 fully anonymous counseling lines" },
+        { title: "Timeline Honor Oath Registry", section: "pledge", desc: "Register parameters to print your commitment oath" },
+        { title: "Narcotics, Fentanyl & Opioid Collapse", section: "about", desc: "Target parameters of narcotics & biological impact" },
+        { title: "CNS Stimulant Misuse Profiles", section: "about", desc: "Central Nervous System acceleration risks" },
+        { title: "Cardiac & Neural Damage Mapping", section: "harmful-effects", desc: "Skeletal and organic degradation coordinates" },
+        { title: "Natural Dopamine Activities Generator", section: "prevention", desc: "Healthy athletic and creative replacement options" }
+    ];
+
+    const searchInput = document.getElementById('global-search');
+    const searchDropdown = document.getElementById('search-results-dropdown');
+
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase().trim();
+        if (!value) {
+            searchDropdown.classList.add('hidden');
+            return;
+        }
+
+        const filtered = searchDb.filter(item => 
+            item.title.toLowerCase().includes(value) || 
+            item.desc.toLowerCase().includes(value)
+        );
+
+        if (filtered.length === 0) {
+            searchDropdown.innerHTML = `<div class="p-2.5 text-center text-zinc-400 font-mono">No telemetry matching results</div>`;
+        } else {
+            searchDropdown.innerHTML = filtered.map(item => `
+                <a href="#${item.section}" onclick="clearSearch()" class="block p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all border-b border-dashed border-zinc-200 dark:border-zinc-800 last:border-0 font-mono">
+                    <span class="block font-black text-brand-accent text-[10px] uppercase">${item.title}</span>
+                    <span class="block text-[8px] text-zinc-500 mt-0.5">${item.desc}</span>
+                </a>
+            `).join('');
+        }
+        searchDropdown.classList.remove('hidden');
+    });
+
+    function clearSearch() {
+        searchInput.value = '';
+        searchDropdown.classList.add('hidden');
+    }
+
+    window.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+            searchDropdown.classList.add('hidden');
+        }
+    });
+
+    // Simulated Tickers
+    let deathCount = 350000;
+    let addictCount = 27500000;
+
+    function simulateTickers() {
+        setInterval(() => {
+            deathCount += Math.floor(Math.random() * 2);
+            addictCount += Math.floor(Math.random() * 2);
+            document.getElementById('stat-deaths').innerText = deathCount.toLocaleString() + "+";
+            document.getElementById('stat-addicts').innerText = (addictCount / 1000000).toFixed(2) + "M";
+        }, 5000);
+    }
+    simulateTickers();
+
+    const drugsData = {
+        narcotics: {
+            category: "High Mortality Risk",
+            title: "Narcotics & Opioids",
+            desc: "These elements primarily bind to specific opioid receptors in the brain's pain pathways, inducing massive biological dependency and shutting down autonomous respiration controls.",
+            vars: ["Fentanyl (Highly Lethal Synthetics)", "Heroin (Diamorphine Compounds)", "Prescribed Pain Inhibitors"],
+            symp: ["Rapid Autonomous Respiration Collapse", "Synaptic Path Sclerosis", "Total Organ Failure / Lethal Toxicity"]
+        },
+        stimulants: {
+            category: "CNS Exhaustion",
+            title: "Central Nervous Stimulants",
+            desc: "Compounds engineered to accelerate neurological transmissions. They prompt high cardiac stress peaks followed by clinical dopamine crash loops.",
+            vars: ["Methamphetamines (Crystal Ice)", "Cocaine & Volatile Derivatives", "ADHD Off-Prescription Stimulants"],
+            symp: ["Cardiovascular Arrhythmia Risks", "Severe Paranoid Psychosis", "Accelerated Neuro-Tissue Sclerosis"]
+        },
+        depressants: {
+            category: "Motor Suppression",
+            title: "CNS Depressants & Sedatives",
+            desc: "Substances formulated to decelerate synaptic activity. Heavy usage ruins balance coordination and systematically triggers central nervous lethargy.",
+            vars: ["Benzodiazepines (Anxiolytic Meds)", "Barbiturate Formulas", "Volatile Clinical Sedatives"],
+            symp: ["Somatic Reflex Extinction", "Respiratory Suppression (Synergistic risk)", "Permanent Intellectual Decay"]
+        },
+        hallucinogens: {
+            category: "Sensory Disruption",
+            title: "Hallucinogenic Agents",
+            desc: "Compounds that interrupt typical sensory transmission metrics, prompting severe perceptual delusions and lasting cognitive panic triggers.",
+            vars: ["Lysergic Acid Diethylamide (LSD)", "Psilocybin Extracted Substances", "PCP (Phencyclidine / Angel Dust)"],
+            symp: ["Persistent Hallucinogen Perception (HPPD)", "Severe Dissociation Cycles", "Self-Injury Risks during Episodes"]
+        }
+    };
+
+    function switchDrugTab(category) {
+        document.querySelectorAll('.drug-tab-btn').forEach(btn => {
+            btn.className = "drug-tab-btn text-left px-4 py-3.5 border-l-4 border-zinc-300 bg-transparent transition-all brutal-border";
+            btn.querySelector('span:first-child').className = "block text-xs font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-mono";
+        });
+
+        const activeBtn = document.getElementById(`btn-${category}`);
+        activeBtn.className = "drug-tab-btn active text-left px-4 py-3.5 border-l-4 border-brand-accent bg-zinc-100 dark:bg-zinc-950 transition-all brutal-border";
+        activeBtn.querySelector('span:first-child').className = "block text-xs font-black text-brand-accent uppercase tracking-wider font-mono";
+
+        const target = drugsData[category];
+        const container = document.getElementById('drug-content-container');
+        
+        container.innerHTML = `
+            <div class="space-y-4 fade-in-el">
+                <div class="inline-flex px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-white bg-brand-accent border border-zinc-900 dark:border-white font-mono">
+                    ${target.category}
+                </div>
+                <h3 class="text-xl font-black tracking-tight text-zinc-950 dark:text-white uppercase font-mono">${target.title}</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-[11px] leading-relaxed font-mono">
+                    ${target.desc}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-dashed border-zinc-300 dark:border-zinc-800">
+                    <div>
+                        <h4 class="text-[9px] font-black uppercase tracking-widest text-brand-accent mb-2 font-mono">// Chemical Substrates</h4>
+                        <ul class="space-y-1.5 text-xs text-zinc-800 dark:text-zinc-300 font-mono">
+                            ${target.vars.map(v => `<li>- ${v}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[9px] font-black uppercase tracking-widest text-brand-accent mb-2 font-mono">// Biological Damage Trace</h4>
+                        <ul class="space-y-1.5 text-xs text-zinc-800 dark:text-zinc-300 font-mono">
+                            ${target.symp.map(s => `<li>- ${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    const impactCtx = document.getElementById('impactChart').getContext('2d');
+    const datasets = {
+        age: {
+            labels: ['Secondary Education (Ages 12-17)', 'Higher Education (Ages 18-25)', 'Professional Entry (Ages 26-35)', 'Adult Demographics (Ages 36+)'],
+            data: [14.2, 38.6, 28.1, 19.1],
+            label: 'Telemetry Misuse Index (%)'
+        },
+        substance: {
+            labels: ['Opioids & Synthetics', 'Volatile CNS Stimulants', 'Synthetic Cannabinoids', 'Over-Prescribed Depressants'],
+            data: [38, 24, 28, 10],
+            label: 'Systemic Breakdown Factor (%)'
+        }
+    };
+
+    let impactChart = new Chart(impactCtx, {
+        type: 'bar',
+        data: {
+            labels: datasets.age.labels,
+            datasets: [{
+                label: datasets.age.label,
+                data: datasets.age.data,
+                backgroundColor: '#e11d48',
+                borderColor: '#09090b',
+                borderWidth: 2,
+                borderRadius: 0, 
+                barThickness: 24
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(9, 9, 11, 0.05)' },
+                    ticks: { font: { size: 8, family: 'Courier New' }, color: '#9ca3af' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 8, family: 'Courier New' }, color: '#9ca3af' }
+                }
+            }
+        }
+    });
+
+    function toggleDataset(type) {
+        const ageBtn = document.getElementById('chart-btn-age');
+        const subBtn = document.getElementById('chart-btn-substance');
+
+        if (type === 'age') {
+            ageBtn.className = "px-2.5 py-1 text-[10px] font-black bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all font-mono";
+            subBtn.className = "px-2.5 py-1 text-[10px] font-bold text-zinc-400 hover:text-brand-accent transition-all font-mono";
+            
+            impactChart.data.labels = datasets.age.labels;
+            impactChart.data.datasets[0].data = datasets.age.data;
+            impactChart.data.datasets[0].backgroundColor = '#e11d48';
+        } else {
+            subBtn.className = "px-2.5 py-1 text-[10px] font-black bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all font-mono";
+            ageBtn.className = "px-2.5 py-1 text-[10px] font-bold text-zinc-400 hover:text-brand-accent transition-all font-mono";
+            
+            impactChart.data.labels = datasets.substance.labels;
+            impactChart.data.datasets[0].data = datasets.substance.data;
+            impactChart.data.datasets[0].backgroundColor = '#9f1239';
+        }
+        impactChart.update();
+    }
+
+    const preventionDataDef = {
+        students: [
+            { title: "Somatic Training Metrics", desc: "Formulate physical exercise timelines to trigger natural cardiovascular dopamine releases." },
+            { title: "Avoid Cognitive Shortcuts", desc: "Manage academic strain with institutional advisors instead of unprescribed modifiers." },
+            { title: "Select Clear Relational Circles", desc: "Consciously realign with communities that respect your health limits." }
+        ],
+        parents: [
+            { title: "Monitor Behavioral Shocks", desc: "Watch for rapid changes in visual coordination, social isolation, or uncharacteristic financial stress." },
+            { title: "Build Low-Friction Spaces", desc: "Keep open communication parameters to reduce feelings of social exclusion." },
+            { title: "Retain Anonymous Contact Lists", desc: "Save secure, confidential clinical support paths in accessible guides." }
+        ],
+        schools: [
+            { title: "Campus Buffer Security", desc: "Enforce strict security buffers to block illicit distribution networks bordering universities." },
+            { title: "Evidence-Based Science", desc: "Teach objective neurobiological facts regarding chemical dependency in normal study paths." },
+            { title: "Non-Punitive Recovery Desks", desc: "Offer supportive medical routing directories without triggering immediate academic expulsion." }
+        ]
+    };
+
+    function switchPreventionTab(tabId) {
+        document.querySelectorAll('.prev-tab').forEach(btn => {
+            btn.className = "prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all px-4 font-mono";
+        });
+
+        const activeBtn = document.getElementById(`prev-btn-${tabId}`);
+        activeBtn.className = "prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-brand-accent active-tab-line transition-all px-4 font-mono";
+        if (tabId === 'students') activeBtn.className = "prev-tab pb-3 text-[10px] font-black uppercase tracking-widest text-brand-accent active-tab-line transition-all pr-4 pl-0 font-mono";
+
+        const container = document.getElementById('prevention-cards-grid');
+        const cards = preventionDataDef[tabId];
+        
+        container.innerHTML = cards.map(c => `
+            <div class="bg-white dark:bg-zinc-900 border-2 border-zinc-900 dark:border-zinc-100 p-5 rounded-none brutal-shadow fade-in-el">
+                <h4 class="font-black text-xs text-brand-accent uppercase tracking-wider mb-2 font-mono">// ${c.title}</h4>
+                <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-mono">${c.desc}</p>
+            </div>
+        `).join('');
+    }
+
+    switchPreventionTab('students');
+
+    const alternatives = [
+        { title: "High-Resistance Athletic Conditioning", desc: "Engages systemic oxygenation, releasing reliable baseline endorphins." },
+        { title: "Logical Schematic Design / Coding", desc: "Demands linear logic chains, triggering targeted endorphins on successful compiles." },
+        { title: "High-Frequency Rhythmic Percussion", desc: "Engages complex motor coordinates, channeling pent-up adrenaline." },
+        { title: "Tactile Clay Sculpting / Visual Arts", desc: "Employs direct sensory touch loops, restoring somatic relaxation vectors." }
+    ];
+
+    function generateAlternative() {
+        const rand = alternatives[Math.floor(Math.random() * alternatives.length)];
+        const container = document.getElementById('hobby-container');
+        document.getElementById('hobby-title').innerText = "// " + rand.title;
+        document.getElementById('hobby-desc').innerText = rand.desc;
+        container.classList.remove('hidden');
+    }
+
+    let pledgerNameGlobal = "";
+    let pledgerInstGlobal = "";
+
+    function drawSecuritySeal(ctx, cx, cy) {
+        ctx.save();
+        ctx.translate(cx, cy);
+
+        const points = 40;
+        const outerRadius = 65;
+        const innerRadius = 55;
+        
+        ctx.fillStyle = "#e11d48";
+        ctx.beginPath();
+        for (let i = 0; i < points * 2; i++) {
+            let angle = (i * Math.PI) / points;
+            let r = i % 2 === 0 ? outerRadius : innerRadius;
+            ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+        }
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = "#faf9f6";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, 50, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = "#09090b";
+        ctx.beginPath();
+        ctx.arc(0, 0, 42, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#faf9f6";
+        ctx.font = "800 13px 'Montserrat', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("OATH", 0, -8);
+        ctx.font = "bold 9px 'Montserrat', sans-serif";
+        ctx.fillText("VERIFIED", 0, 8);
+
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "12px sans-serif";
+        ctx.fillText("★", -18, 0);
+        ctx.fillText("★", 18, 0);
+
+        ctx.restore();
+    }
+
+    function drawRibbons(ctx, cx, cy) {
+        ctx.save();
+        
+        ctx.fillStyle = "#9f1239";
+        ctx.beginPath();
+        ctx.moveTo(cx - 12, cy + 20);
+        ctx.lineTo(cx - 40, cy + 130);
+        ctx.lineTo(cx - 20, cy + 115);
+        ctx.lineTo(cx + 2, cy + 130);
+        ctx.lineTo(cx + 2, cy + 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#e11d48";
+        ctx.beginPath();
+        ctx.moveTo(cx - 6, cy + 20);
+        ctx.lineTo(cx - 20, cy + 115);
+        ctx.lineTo(cx + 2, cy + 130);
+        ctx.lineTo(cx + 2, cy + 20);
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.fillStyle = "#9f1239";
+        ctx.beginPath();
+        ctx.moveTo(cx - 2, cy + 20);
+        ctx.lineTo(cx - 2, cy + 130);
+        ctx.lineTo(cx + 20, cy + 115); 
+        ctx.lineTo(cx + 40, cy + 130);
+        ctx.lineTo(cx + 12, cy + 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#e11d48";
+        ctx.beginPath();
+        ctx.moveTo(cx - 2, cy + 20);
+        ctx.lineTo(cx - 2, cy + 130);
+        ctx.lineTo(cx + 20, cy + 115);
+        ctx.lineTo(cx + 12, cy + 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function drawHeaderCrest(ctx, cx, cy) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        
+        ctx.strokeStyle = "#e11d48";
+        ctx.lineWidth = 2.5;
+        ctx.fillStyle = "rgba(225, 29, 72, 0.05)";
+        ctx.beginPath();
+        ctx.moveTo(0, -25);
+        ctx.quadraticCurveTo(22, -25, 22, 0);
+        ctx.quadraticCurveTo(22, 22, 0, 32);
+        ctx.quadraticCurveTo(-22, 22, -22, 0);
+        ctx.quadraticCurveTo(-22, -25, 0, -25);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "#09090b";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(-8, 0, 7, Math.PI * 0.5, Math.PI * 1.5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(8, 0, 7, Math.PI * 1.5, Math.PI * 0.5);
+        ctx.stroke();
+
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "14px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("★", 0, -1);
+
+        ctx.restore();
+    }
+
+    function drawComplexWatermark(ctx, cx, cy) {
+        ctx.save();
+        ctx.strokeStyle = "rgba(225, 29, 72, 0.025)";
+        ctx.lineWidth = 1;
+        
+        ctx.beginPath();
+        let R = 320;
+        let r = 123;
+        let p = 150;
+        for (let t = 0; t < Math.PI * 14; t += 0.02) {
+            let x = (R - r) * Math.cos(t) + p * Math.cos((R - r) * t / r);
+            let y = (R - r) * Math.sin(t) - p * Math.sin((R - r) * t / r);
+            if (t === 0) ctx.moveTo(cx + x, cy + y);
+            else ctx.lineTo(cx + x, cy + y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(9, 9, 11, 0.018)";
+        ctx.beginPath();
+        R = 180;
+        r = 73;
+        p = 90;
+        for (let t = 0; t < Math.PI * 12; t += 0.02) {
+            let x = (R - r) * Math.cos(t) + p * Math.cos((R - r) * t / r);
+            let y = (R - r) * Math.sin(t) - p * Math.sin((R - r) * t / r);
+            if (t === 0) ctx.moveTo(cx + x, cy + y);
+            else ctx.lineTo(cx + x, cy + y);
+        }
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function generateCertificate(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('pledger-name').value;
+        const inst = document.getElementById('pledger-institution').value;
+
+        pledgerNameGlobal = name;
+        pledgerInstGlobal = inst;
+
+        const canvas = document.getElementById('certCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 1600;
+        canvas.height = 1130;
+
+        ctx.fillStyle = "#faf9f6";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = "rgba(225, 29, 72, 0.02)";
+        ctx.lineWidth = 1;
+        for (let i = 0; i < canvas.width; i += 40) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+        }
+        for (let j = 0; j < canvas.height; j += 40) {
+            ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
+        }
+
+        ctx.strokeStyle = "rgba(225, 29, 72, 0.035)";
+        ctx.lineWidth = 1;
+        const radius = 180;
+        ctx.beginPath(); ctx.arc(0, 0, radius, 0, Math.PI * 0.5); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 0, radius - 20, 0, Math.PI * 0.5); ctx.stroke();
+        ctx.beginPath(); ctx.arc(canvas.width, 0, radius, Math.PI * 0.5, Math.PI); ctx.stroke();
+        ctx.beginPath(); ctx.arc(canvas.width, 0, radius - 20, Math.PI * 0.5, Math.PI); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, canvas.height, radius, Math.PI * 1.5, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, canvas.height, radius - 20, Math.PI * 1.5, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(canvas.width, canvas.height, radius, Math.PI, Math.PI * 1.5); ctx.stroke();
+        ctx.beginPath(); ctx.arc(canvas.width, canvas.height, radius - 20, Math.PI, Math.PI * 1.5); ctx.stroke();
+
+        drawComplexWatermark(ctx, canvas.width / 2, canvas.height / 2 - 20);
+
+        ctx.strokeStyle = "#09090b";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(50, 50, canvas.width - 100, canvas.height - 100);
+
+        ctx.strokeStyle = "#e11d48";
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(62, 62, canvas.width - 124, canvas.height - 124);
+
+        ctx.strokeStyle = "#e11d48";
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(110, 80); ctx.lineTo(80, 80); ctx.lineTo(80, 110); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(canvas.width - 110, 80); ctx.lineTo(canvas.width - 80, 80); ctx.lineTo(canvas.width - 80, 110); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(110, canvas.height - 80); ctx.lineTo(80, canvas.height - 80); ctx.lineTo(80, canvas.height - 110); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(canvas.width - 110, canvas.height - 80); ctx.lineTo(canvas.width - 80, canvas.height - 80); ctx.lineTo(canvas.width - 80, canvas.height - 110); ctx.stroke();
+
+        ctx.fillStyle = "#e11d48";
+        const corners = [
+            [62, 62], [canvas.width - 62, 62], 
+            [62, canvas.height - 62], [canvas.width - 62, canvas.height - 62]
+        ];
+        corners.forEach(([cx, cy]) => {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(Math.PI / 4);
+            ctx.fillRect(-8, -8, 16, 16);
+            ctx.restore();
+        });
+
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+
+        drawHeaderCrest(ctx, canvas.width / 2, 115);
+
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "bold 15px 'Montserrat', sans-serif";
+        ctx.fillText("NATIONWIDE INITIATIVE FOR A DRUG-FREE FUTURE", canvas.width / 2, 185);
+
+        ctx.strokeStyle = "rgba(9, 9, 11, 0.15)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - 120, 215);
+        ctx.lineTo(canvas.width / 2 + 120, 215);
+        ctx.stroke();
+        ctx.fillStyle = "#e11d48";
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, 215, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#09090b";
+        ctx.font = "900 50px 'Cinzel', serif";
+        ctx.fillText("CERTIFICATE OF COMMITMENT", canvas.width / 2, 285);
+
+        ctx.fillStyle = "#71717a";
+        ctx.font = "italic 22px 'Georgia', serif";
+        ctx.fillText("This official document is proudly awarded to", canvas.width / 2, 385);
+
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "700 60px 'Cinzel', serif";
+        const nameText = name.toUpperCase();
+        const nameWidth = ctx.measureText(nameText).width;
+        ctx.fillText(nameText, canvas.width / 2, 490);
+
+        ctx.strokeStyle = "rgba(225, 29, 72, 0.4)";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - nameWidth / 2 - 55, 490);
+        ctx.lineTo(canvas.width / 2 - nameWidth / 2 - 15, 490);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 + nameWidth / 2 + 15, 490);
+        ctx.lineTo(canvas.width / 2 + nameWidth / 2 + 55, 490);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#09090b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - 350, 540);
+        ctx.lineTo(canvas.width / 2 + 350, 540);
+        ctx.stroke();
+
+        ctx.fillStyle = "#09090b";
+        ctx.font = "bold 19px 'Montserrat', sans-serif";
+        const orgText = `REPRESENTING: ${inst.toUpperCase()}`;
+        const orgWidth = ctx.measureText(orgText).width;
+        ctx.fillText(orgText, canvas.width / 2, 590);
+
+        ctx.strokeStyle = "rgba(9, 9, 11, 0.15)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - orgWidth / 2, 608);
+        ctx.lineTo(canvas.width / 2 + orgWidth / 2, 608);
+        ctx.stroke();
+
+        ctx.fillStyle = "#3f3f46";
+        ctx.font = "18px 'Inter', sans-serif";
+        ctx.fillText("for taking the solemn oath to protect biological timeline integrity, reject chemical dependency,", canvas.width / 2, 680);
+        ctx.fillText("and actively steer peers towards counseling, rehabilitation, and clean neurotransmitter alternatives.", canvas.width / 2, 715);
+
+        const pledgeID = "NMBA-" + Math.floor(100000 + Math.random() * 900000);
+        const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        ctx.fillStyle = "#a1a1aa";
+        ctx.font = "800 12px 'Montserrat', sans-serif";
+        ctx.fillText(`PLEDGE ID: ${pledgeID}  |  ISSUED ON: ${currentDate.toUpperCase()}`, canvas.width / 2, 780);
+
+        drawRibbons(ctx, canvas.width / 2, 910);
+        drawSecuritySeal(ctx, canvas.width / 2, 910);
+
+        ctx.strokeStyle = "rgba(9, 9, 11, 0.25)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(180, 990);
+        ctx.lineTo(480, 990);
+        ctx.stroke();
+        ctx.fillStyle = "#09090b";
+        ctx.font = "bold 14px 'Montserrat', sans-serif";
+        ctx.fillText("NATIONAL REGISTRY DESK", 330, 1020);
+        ctx.font = "italic 22px 'Georgia', serif";
+        ctx.fillStyle = "#e11d48";
+        ctx.fillText("Aud. K. Shrivastava", 330, 960);
+
+        ctx.beginPath();
+        ctx.moveTo(canvas.width - 480, 990);
+        ctx.lineTo(canvas.width - 180, 990);
+        ctx.stroke();
+        ctx.fillStyle = "#09090b";
+        ctx.font = "bold 14px 'Montserrat', sans-serif";
+        ctx.fillText("TIMELINE ASSURANCE BOARD", canvas.width - 330, 1020);
+        ctx.font = "italic 22px 'Georgia', serif";
+        ctx.fillStyle = "#e11d48";
+        ctx.fillText("Dir. A. Mukherjee", canvas.width - 330, 960);
+
+        const countEl = document.getElementById('global-pledge-count');
+        const currentCount = parseInt(countEl.innerText.replace(/,/g, ''));
+        countEl.innerText = (currentCount + 1).toLocaleString();
+
+        document.getElementById('cert-placeholder').classList.add('hidden');
+        document.getElementById('cert-display').classList.remove('hidden');
+        document.getElementById('cert-display').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function downloadCertificate() {
+        const canvas = document.getElementById('certCanvas');
+        const imgUrl = canvas.toDataURL("image/png");
+        
+        const link = document.createElement('a');
+        link.download = `${pledgerNameGlobal.replace(/\s+/g, '_')}_CommitmentToken.png`;
+        link.href = imgUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function printCertificate() {
+        const canvas = document.getElementById('certCanvas');
+        const imgUrl = canvas.toDataURL("image/png");
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`<img src="${imgUrl}" style="width:100%; max-width:850px; display:block; margin:20px auto;">`);
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
+    }
+
+    function toggleFaq(id) {
+        const ans = document.getElementById(`faq-ans-${id}`);
+        const icon = document.getElementById(`faq-icon-${id}`);
+        
+        if (ans.classList.contains('hidden')) {
+            ans.classList.remove('hidden');
+            icon.classList.add('rotate-180');
+        } else {
+            ans.classList.add('hidden');
+            icon.classList.remove('rotate-180');
+        }
+    }
+
+    const modal = document.getElementById('alert-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalIcon = document.getElementById('modal-icon-container');
+
+    function openModal(title, desc, isSuccess) {
+        modalTitle.innerText = title;
+        modalDesc.innerText = desc;
+        if (isSuccess) {
+            modalIcon.innerHTML = `<i class="fa-solid fa-circle-check text-brand-accent"></i>`;
+        } else {
+            modalIcon.innerHTML = `<i class="fa-solid fa-circle-info text-zinc-900 dark:text-white"></i>`;
+        }
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+    }
+
+    function handleInquirySubmit(event) {
+        event.preventDefault();
+        openModal("Secure Inquiry Queued", "Your encrypted anonymous intake has been routed. Crisis counselor operators will trace correspondence using your safe credentials.", true);
+        document.getElementById('inquiry-name').value = '';
+        document.getElementById('inquiry-email').value = '';
+        document.getElementById('inquiry-msg').value = '';
+    }
+
+    function downloadResource(filename) {
+        openModal("Download Initiated", `Your terminal is safely retrieving resources: ${filename}`, false);
+    }
+
+    // --- DOPAMINE TOLERANCE SIMULATOR LOGIC ---
+    let dopaDoses = 0;
+    let dopaBaseline = 100;
+    let dopaIsAnimating = false;
+
+    function triggerDopamineSpike() {
+        if (dopaIsAnimating || dopaBaseline <= 20) return;
+        dopaIsAnimating = true;
+        dopaDoses++;
+        
+        // Spike math: Massive initial spike, heavy diminishing returns as receptors burn out
+        let spikeAdded = 170 * Math.pow(0.55, dopaDoses - 1);
+        let peak = dopaBaseline + spikeAdded;
+        
+        updateDopaUI(peak, true);
+        document.getElementById('dopa-stat-doses').innerText = dopaDoses;
+        document.getElementById('dopa-stat-peak').innerText = Math.round(peak) + "%";
+        document.getElementById('dopa-stat-status').innerText = "UNNATURAL PEAK (EUPHORIA)";
+        document.getElementById('dopa-stat-status').className = "text-xs font-black text-amber-500 uppercase mt-1 block animate-pulse";
+
+        // Disable button temporarily
+        const btn = document.getElementById('btn-dose');
+        btn.classList.add('opacity-50', 'pointer-events-none');
+        btn.innerText = "[ PROCESSING CRASH... ]";
+
+        // Crash after 1.5 seconds
+        setTimeout(() => {
+            // Baseline permanent damage logic
+            dopaBaseline = dopaBaseline - (22 * Math.pow(0.85, dopaDoses - 1));
+            if (dopaBaseline < 20) dopaBaseline = 20; // Hard floor
+
+            let crashLevel = dopaBaseline - 15; // Hangover dips below the new baseline
+            if (crashLevel < 10) crashLevel = 10;
+
+            updateDopaUI(crashLevel, false);
+            
+            document.getElementById('dopa-stat-base').innerText = Math.round(dopaBaseline) + "%";
+            
+            if (dopaBaseline < 40) {
+                document.getElementById('dopa-stat-base').className = "text-xl font-black text-brand-accent";
+                document.getElementById('dopa-stat-status').innerText = "CLINICAL DEPENDENCY REACHED";
+                document.getElementById('dopa-stat-status').className = "text-xs font-black text-brand-accent uppercase mt-1 block animate-pulse";
+                setLifeState('ruin'); // Trigger global site state
+            } else if (dopaBaseline < 80) {
+                document.getElementById('dopa-stat-base').className = "text-xl font-black text-amber-500";
+                document.getElementById('dopa-stat-status').innerText = "BASELINE DAMAGED (CRAVING)";
+                document.getElementById('dopa-stat-status').className = "text-xs font-black text-amber-500 uppercase mt-1 block";
+            }
+
+            setTimeout(() => {
+                // Settle back to new baseline
+                updateDopaUI(dopaBaseline, false);
+                dopaIsAnimating = false;
+                
+                if (dopaBaseline > 20) {
+                    btn.classList.remove('opacity-50', 'pointer-events-none');
+                    btn.innerText = "[ TRIGGER SYNTHETIC DOSE ]";
+                } else {
+                    btn.innerText = "[ RECEPTORS BURNED OUT ]";
+                    document.getElementById('btn-dopa-reset').classList.remove('hidden');
+                }
+            }, 1000);
+
+        }, 1500);
+    }
+
+    function updateDopaUI(val, isSpike) {
+        const bar = document.getElementById('dopamine-bar');
+        const valText = document.getElementById('dopamine-val');
+        
+        // Max visual scale is 300% -> 100% width
+        let widthPct = (val / 300) * 100;
+        if (widthPct > 100) widthPct = 100;
+        
+        bar.style.width = widthPct + "%";
+        valText.innerText = Math.round(val) + "%";
+
+        if (isSpike) {
+            bar.className = "h-full bg-brand-accent transition-all duration-300 ease-out relative z-0 flex items-center justify-end pr-2 border-r-2 border-zinc-900 dark:border-white shadow-[0px_0px_15px_rgba(225,29,72,0.8)]";
+        } else {
+            if (val < 40) {
+                bar.className = "h-full bg-zinc-800 transition-all duration-[1500ms] ease-in-out relative z-0 flex items-center justify-end pr-2 border-r-2 border-zinc-900 dark:border-white";
+            } else if (val < 80) {
+                bar.className = "h-full bg-amber-500 transition-all duration-[1200ms] ease-in-out relative z-0 flex items-center justify-end pr-2 border-r-2 border-zinc-900 dark:border-white";
+            } else {
+                bar.className = "h-full bg-emerald-500 transition-all duration-1000 ease-in-out relative z-0 flex items-center justify-end pr-2 border-r-2 border-zinc-900 dark:border-white";
+            }
+        }
+    }
+
+    function resetDopamine() {
+        dopaDoses = 0;
+        dopaBaseline = 100;
+        dopaIsAnimating = false;
+        
+        document.getElementById('dopa-stat-doses').innerText = 0;
+        document.getElementById('dopa-stat-peak').innerText = "100%";
+        document.getElementById('dopa-stat-base').innerText = "100%";
+        document.getElementById('dopa-stat-base').className = "text-xl font-black text-emerald-500";
+        document.getElementById('dopa-stat-status').innerText = "Healthy Baseline";
+        document.getElementById('dopa-stat-status').className = "text-xs font-black text-emerald-500 uppercase mt-1 block";
+        
+        const btn = document.getElementById('btn-dose');
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+        btn.innerText = "[ TRIGGER SYNTHETIC DOSE ]";
+        
+        document.getElementById('btn-dopa-reset').classList.add('hidden');
+        setLifeState('clean'); // Restore global site state
+        
+        updateDopaUI(100, false);
+    }
+</script>
+
+</body>
+</html>
